@@ -10,6 +10,7 @@ const submitForm = async (e) => {
     const formatData = NewItem.KeysAndValues(newItem)
 
     const url = `${URL + formatData}`;
+    console.log(url)
     const resposta = await fetch(url);
     const dados = await resposta.json();
     

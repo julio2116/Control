@@ -1,18 +1,14 @@
 class NewItem {
-    constructor(nome = null, email = null, mensagem = null) {
+    constructor(nome = null, qtd = null) {
         this.nome = nome;
-        this.email = email;
-        this.mensagem = mensagem;
+        this.qtd = qtd;
     }
 
     get nome() {
         return this._nome;
     }
-    get email() {
-        return this._email;
-    }
-    get mensagem() {
-        return this._mensagem;
+    get qtd() {
+        return this._qtd;
     }
 
     set nome(nome) {
@@ -21,17 +17,11 @@ class NewItem {
         }
         this._nome = nome;
     }
-    set email(email) {
-        if (typeof email !== "string") {
-            throw new Error("Email inválido");
+    set qtd(qtd) {
+        if (typeof qtd !== "string") {
+            throw new Error("qtd inválido");
         }
-        this._email = email;
-    }
-    set mensagem(mensagem) {
-        if (typeof mensagem !== "string") {
-            throw new Error("Mensagem inválida");
-        }
-        this._mensagem = mensagem;
+        this._qtd = qtd;
     }
 
     static KeysAndValues(objeto = null) {
