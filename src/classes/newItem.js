@@ -1,9 +1,13 @@
 class NewItem {
-    constructor(nome = null, qtd = null) {
+    constructor(nome = null, id = null, qtd = null) {
+        this.id = id;
         this.nome = nome;
         this.qtd = qtd;
     }
 
+    get id() {
+        return this._id;
+    }
     get nome() {
         return this._nome;
     }
@@ -11,6 +15,12 @@ class NewItem {
         return this._qtd;
     }
 
+    set id(id) {
+        if (typeof id !== "string") {
+            throw new Error("id inválido");
+        }
+        this._id = id;
+    }
     set nome(nome) {
         if (typeof nome !== "string") {
             throw new Error("Nome inválido");
