@@ -5,13 +5,14 @@ import Loading from "./Loading";
 
 const Form = () => {
     const [isLoading, setIsLoading] = useState(false);
-    const [allNames, setAllNames] = useState([]);        // valores vindos do fetch
-    const [filtered, setFiltered] = useState([]);        // valores filtrados conforme digita
-
+    const [allNames, setAllNames] = useState([]); // valores vindos do fetch
+    const [filtered, setFiltered] = useState([]); // valores filtrados conforme digita
+    const URL = import.meta.env.VITE_URL;
     // <<< ALTERAÇÃO 1: produto agora é OBJETO FIXO >>>
     const [produto, setProduto] = useState({
-        Produto: "",
-        Id: ""
+        produto: "",
+        id: "",
+        saldoFinal: 0,
     });
 
     //------------------------------------
@@ -19,8 +20,7 @@ const Form = () => {
     //------------------------------------
     useEffect(() => {
         async function loadNames() {
-            const url =
-                "https://script.google.com/macros/s/AKfycbyjLwvCzO3kMixS4rVk4est6p-uodQJeVaWARY4u7c5JVNKHcuYcGymn1u6sDj4L49K/exec";
+            const url = URL;
 
             try {
                 const res = await fetch(url);
@@ -44,7 +44,7 @@ const Form = () => {
         // <<< ALTERAÇÃO 2: atualizar só o campo Produto >>>
         setProduto((prev) => ({
             ...prev,
-            Produto: value,
+            produto: value,
         }));
 
         if (value.trim() === "") {
@@ -53,7 +53,7 @@ const Form = () => {
         }
 
         const filtrados = allNames.filter((item) =>
-            item.Produto.toLowerCase().includes(value.toLowerCase())
+            item.produto.toLowerCase().includes(value.toLowerCase())
         );
 
         setFiltered(filtrados);
@@ -63,10 +63,12 @@ const Form = () => {
     // 3) SELECIONAR SUGESTÃO
     //------------------------------------
     function selectName(item) {
+        console.log(item);
         // <<< ALTERAÇÃO 3: preencher Produto e Id corretamente >>>
         setProduto({
-            Produto: item.Produto,
-            Id: item.Id
+            produto: item.produto,
+            id: item.id,
+            saldoFinal: item.saldoFinal,
         });
 
         setFiltered([]); // fecha sugestões
@@ -78,11 +80,14 @@ const Form = () => {
     async function handleSubmit(e) {
         e.preventDefault();
         setIsLoading(true);
-
-        const create = await submitForm(e);
-        retorno(create);
-
-        setIsLoading(false);
+        try {
+            const create = await submitForm(e);
+            retorno(create);
+            setIsLoading(false);
+        } catch (e) {
+            setIsLoading(false);
+            console.error(e)
+        }
     }
 
     return (
@@ -97,7 +102,10 @@ const Form = () => {
 
                 {/* Nome */}
                 <div className="flex flex-col relative">
-                    <label htmlFor="nome" className="text-gray-600 font-medium mb-1">
+                    <label
+                        htmlFor="nome"
+                        className="text-gray-600 font-medium mb-1"
+                    >
                         Nome
                     </label>
 
@@ -105,7 +113,7 @@ const Form = () => {
                         id="nome"
                         name="nome"
                         type="text"
-                        value={produto.Produto}
+                        value={produto.produto}
                         onChange={handleNomeChange}
                         className="px-3 py-2 rounded-xl border border-gray-300 
                         focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -117,7 +125,7 @@ const Form = () => {
                         id="id"
                         name="id"
                         type="text"
-                        value={produto.Id}
+                        value={produto.id}
                         onChange={handleNomeChange}
                         className="px-3 py-2 rounded-xl border border-gray-300 
                         focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -131,11 +139,11 @@ const Form = () => {
                         <ul className="absolute top-full mt-1 w-full bg-white border border-gray-200 rounded-xl shadow-lg max-h-52 overflow-y-auto z-50">
                             {filtered.map((item, i) => (
                                 <li
-                                    key={item.id || `${item.Produto}` + `${i}`}
+                                    key={item.id || `${item.produto}` + `${i}`}
                                     className="px-3 py-2 hover:bg-gray-100 cursor-pointer"
                                     onClick={() => selectName(item)}
                                 >
-                                    {item.Produto}
+                                    {item.produto}
                                 </li>
                             ))}
                         </ul>
@@ -143,18 +151,42 @@ const Form = () => {
                 </div>
 
                 {/* Quantidade */}
-                <div className="flex flex-col">
-                    <label htmlFor="email" className="text-gray-600 font-medium mb-1">
-                        Quantidade da saída
-                    </label>
-                    <input
-                        id="qtd"
-                        name="qtd"
-                        type="text"
-                        className="px-3 py-2 rounded-xl border border-gray-300 
+                <div className="flex gap-[4%]">
+                    <div className="flex flex-col max-w-[48%]">
+                        <label
+                            htmlFor="email"
+                            className="text-gray-600 font-medium mb-1"
+                        >
+                            Quantidade da saída
+                        </label>
+                        <input
+                            id="qtd"
+                            name="qtd"
+                            type="text"
+                            className="px-3 py-2 rounded-xl border border-gray-300 
                         focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        placeholder="1"
-                    />
+                            placeholder="1"
+                        />
+                    </div>
+                    <div className="flex flex-col min-w-[48%] max-h-[42px]">
+                        <span
+                            htmlFor="email"
+                            className="text-gray-600 font-medium mb-1"
+                        >
+                            Disponível
+                        </span>
+                        <div
+                            id="available"
+                            name="available"
+                            type="text"
+                            className="px-3 py-2 rounded-xl border border-gray-300 text-[]
+                        focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-full min-w-full"
+                            placeholder="1"
+                        >
+                            {produto.saldoFinal}
+                            {console.log(produto.saldoFinal)}
+                        </div>
+                    </div>
                 </div>
 
                 {/* Botão */}

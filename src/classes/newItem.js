@@ -1,5 +1,5 @@
 class NewItem {
-    constructor(nome = null, id = null, qtd = null) {
+    constructor(nome, id, qtd) {
         this.id = id;
         this.nome = nome;
         this.qtd = qtd;
@@ -15,20 +15,20 @@ class NewItem {
         return this._qtd;
     }
 
-    set id(id) {
-        if (typeof id !== "string") {
+    set id(id = null) {
+        if (!id || typeof id !== "string") {
             throw new Error("id inválido");
         }
         this._id = id;
     }
-    set nome(nome) {
-        if (typeof nome !== "string") {
+    set nome(nome = null) {
+        if (!nome || typeof nome !== "string") {
             throw new Error("Nome inválido");
         }
         this._nome = nome;
     }
-    set qtd(qtd) {
-        if (typeof qtd !== "string") {
+    set qtd(qtd = null) {
+        if (!qtd || Number.isNaN(Number(qtd))) {
             throw new Error("qtd inválido");
         }
         this._qtd = qtd;
@@ -43,8 +43,8 @@ class NewItem {
         for (const [key, value] of Object.entries(objeto)) {
             formatObjeto += key.replace("_", "") + "=" + value + "&";
         }
-        formatObjeto = formatObjeto.slice(0, -1)
-        return formatObjeto
+        formatObjeto = formatObjeto.slice(0, -1);
+        return formatObjeto;
     }
 }
 
