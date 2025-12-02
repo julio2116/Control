@@ -23,7 +23,6 @@ const Form = () => {
             try {
                 const res = await fetch(url);
                 const data = await res.json();
-                console.log(data);
                 setAllNames(data.items);
             } catch (err) {
                 console.error("Erro ao carregar nomes:", err);
@@ -63,8 +62,6 @@ const Form = () => {
     }
 
     function selectName(item) {
-        console.log(item);
-
         setProduto({
             produto: item.produto,
             id: item.id,
@@ -84,7 +81,7 @@ const Form = () => {
             setProduto(empty)
         } catch (e) {
             setIsLoading(false);
-            retorno(e)
+            console.log(e)
         }
     }
 

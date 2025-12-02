@@ -47,9 +47,6 @@ class NewItem {
         return formatObjeto;
     }
 
-    static newItem(){
-        return new NewItem("", "", "")
-    }
 }
 
 export { NewItem };
