@@ -7,6 +7,10 @@ const submitForm = async (e) => {
     const data = new FormData(e.target);
     const payload = Object.fromEntries(data);
 
+    for(const [key, value] in Object.entries(payload)){
+        if(!value) throw new Error('PREENCHA TODOS OS ITENS')
+    }
+
     const newItem = new NewItem(...Object.values(payload));
     const formatData = NewItem.KeysAndValues(newItem);
 

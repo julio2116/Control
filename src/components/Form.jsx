@@ -4,24 +4,22 @@ import retorno from "../utils/return";
 import Loading from "./Loading";
 
 const Form = () => {
-    const [isLoading, setIsLoading] = useState(false);
-    const [allNames, setAllNames] = useState([]); // valores vindos do fetch
-    const [filtered, setFiltered] = useState([]); // valores filtrados conforme digita
-    const URL = import.meta.env.VITE_URL;
-    // <<< ALTERAÇÃO 1: produto agora é OBJETO FIXO >>>
-    const [produto, setProduto] = useState({
+    const empty = {
         produto: "",
         id: "",
-        saldoFinal: 0,
-    });
+        saldoFinal: "",
+        saida: ""
+    }
+    const [isLoading, setIsLoading] = useState(false);
+    const [allNames, setAllNames] = useState([]);
+    const [filtered, setFiltered] = useState([]);
+    const [produto, setProduto] = useState(empty);
 
-    //------------------------------------
-    // 1) BUSCAR TODOS OS NOMES NA MONTAGEM
-    //------------------------------------
+    const URL = import.meta.env.VITE_URL;
+
     useEffect(() => {
         async function loadNames() {
             const url = URL;
-
             try {
                 const res = await fetch(url);
                 const data = await res.json();
@@ -35,13 +33,9 @@ const Form = () => {
         loadNames();
     }, []);
 
-    //------------------------------------
-    // 2) FILTRAR CONFORME O USER DIGITA
-    //------------------------------------
     function handleNomeChange(e) {
         const value = e.target.value;
 
-        // <<< ALTERAÇÃO 2: atualizar só o campo Produto >>>
         setProduto((prev) => ({
             ...prev,
             produto: value,
@@ -59,24 +53,27 @@ const Form = () => {
         setFiltered(filtrados);
     }
 
-    //------------------------------------
-    // 3) SELECIONAR SUGESTÃO
-    //------------------------------------
+    function handleQtd(e){
+        const value = e.target.value;
+
+        setProduto((prev) => ({
+            ...prev,
+            saida: value,
+        }));
+    }
+
     function selectName(item) {
         console.log(item);
-        // <<< ALTERAÇÃO 3: preencher Produto e Id corretamente >>>
+
         setProduto({
             produto: item.produto,
             id: item.id,
             saldoFinal: item.saldoFinal,
         });
 
-        setFiltered([]); // fecha sugestões
+        setFiltered([]);
     }
 
-    //------------------------------------
-    // 4) ENVIO NORMAL DO FORMULÁRIO
-    //------------------------------------
     async function handleSubmit(e) {
         e.preventDefault();
         setIsLoading(true);
@@ -84,9 +81,10 @@ const Form = () => {
             const create = await submitForm(e);
             retorno(create);
             setIsLoading(false);
+            setProduto(empty)
         } catch (e) {
             setIsLoading(false);
-            console.error(e)
+            retorno(e)
         }
     }
 
@@ -99,8 +97,6 @@ const Form = () => {
                 <h2 className="text-2xl font-semibold text-gray-800 text-center">
                     Baixa de itens
                 </h2>
-
-                {/* Nome */}
                 <div className="flex flex-col relative">
                     <label
                         htmlFor="nome"
@@ -134,7 +130,6 @@ const Form = () => {
                         autoComplete="off"
                     />
 
-                    {/* LISTA DE SUGESTÕES */}
                     {filtered.length > 0 && (
                         <ul className="absolute top-full mt-1 w-full bg-white border border-gray-200 rounded-xl shadow-lg max-h-52 overflow-y-auto z-50">
                             {filtered.map((item, i) => (
@@ -150,7 +145,6 @@ const Form = () => {
                     )}
                 </div>
 
-                {/* Quantidade */}
                 <div className="flex gap-[4%]">
                     <div className="flex flex-col max-w-[48%]">
                         <label
@@ -166,6 +160,8 @@ const Form = () => {
                             className="px-3 py-2 rounded-xl border border-gray-300 
                         focus:outline-none focus:ring-2 focus:ring-blue-500"
                             placeholder="1"
+                            value={produto.saida}
+                            onChange={handleQtd}
                         />
                     </div>
                     <div className="flex flex-col min-w-[48%] max-h-[42px]">
@@ -189,7 +185,6 @@ const Form = () => {
                     </div>
                 </div>
 
-                {/* Botão */}
                 <button
                     type="submit"
                     className="w-full py-3 rounded-xl bg-blue-600 text-white font-semibold
