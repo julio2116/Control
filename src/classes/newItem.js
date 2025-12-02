@@ -16,19 +16,19 @@ class NewItem {
     }
 
     set id(id = null) {
-        if (!id || typeof id !== "string") {
+        if (id === null || typeof id !== "string") {
             throw new Error("id inválido");
         }
         this._id = id;
     }
     set nome(nome = null) {
-        if (!nome || typeof nome !== "string") {
+        if (nome === null || typeof nome !== "string") {
             throw new Error("Nome inválido");
         }
         this._nome = nome;
     }
     set qtd(qtd = null) {
-        if (!qtd || Number.isNaN(Number(qtd))) {
+        if (qtd === null || Number.isNaN(Number(qtd))) {
             throw new Error("qtd inválido");
         }
         this._qtd = qtd;
@@ -45,6 +45,10 @@ class NewItem {
         }
         formatObjeto = formatObjeto.slice(0, -1);
         return formatObjeto;
+    }
+
+    static newItem(){
+        return new NewItem("", "", "")
     }
 }
 
