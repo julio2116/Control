@@ -1,0 +1,12 @@
+name = "realtime-sheets"
+main = "src/index.js"
+compatibility_date = "2024-05-01"
+
+[durable_objects]
+bindings = [
+  { name = "DATA_HUB", class_name = "DataHub" }
+]
+
+[[migrations]]
+tag = "v1"
+new_classes = ["DataHub"]
