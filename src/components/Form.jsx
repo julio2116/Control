@@ -62,6 +62,7 @@ const Form = () => {
     }
 
     async function selectName(item) {
+        console.log(URL + `?route=readOne&id=${item}`)
         const fetchData = await fetch(URL + `?route=readOne&id=${item}`)
         const data = await fetchData.json()
         console.log(data)
