@@ -8,8 +8,8 @@ const Form = () => {
         produto: "",
         id: "",
         saldoFinal: "",
-        saida: ""
-    }
+        saida: "",
+    };
     const [isLoading, setIsLoading] = useState(false);
     const [allNames, setAllNames] = useState([]);
     const [filtered, setFiltered] = useState([]);
@@ -17,23 +17,23 @@ const Form = () => {
 
     const URL = import.meta.env.VITE_URL;
 
-    useEffect(() => {
-        async function loadNames() {
-            const url = URL;
-            try {
-                const res = await fetch(url);
-                const data = await res.json();
-                setAllNames(data.items);
-            } catch (err) {
-                console.error("Erro ao carregar nomes:", err);
-            }
+    async function loadNames() {
+        if (isLoading) return;
+        const url = URL;
+        try {
+            const res = await fetch(url);
+            const data = await res.json();
+            setAllNames(data.items);
+        } catch (err) {
+            console.error("Erro ao carregar nomes:", err);
         }
-
+    }
+    useEffect(() => {
         loadNames();
-    }, []);
+    }, [isLoading]);
 
     function handleNomeChange(e) {
-        const value = e.target.value;
+        let value = e.target.value;
 
         setProduto((prev) => ({
             ...prev,
@@ -52,7 +52,7 @@ const Form = () => {
         setFiltered(filtrados);
     }
 
-    function handleQtd(e){
+    function handleQtd(e) {
         const value = e.target.value;
 
         setProduto((prev) => ({
@@ -61,12 +61,10 @@ const Form = () => {
         }));
     }
 
-    function selectName(item) {
-        setProduto({
-            produto: item.produto,
-            id: item.id,
-            saldoFinal: item.saldoFinal,
-        });
+    async function selectName(item) {
+        const fetchData = await fetch(URL + `?route=readOne&id=${item}`)
+        const data = await fetchData.json()
+        setProduto({ ...data.item });
 
         setFiltered([]);
     }
@@ -78,10 +76,9 @@ const Form = () => {
             const create = await submitForm(e);
             retorno(create);
             setIsLoading(false);
-            setProduto(empty)
+            setProduto(empty);
         } catch (e) {
             setIsLoading(false);
-            console.log(e)
         }
     }
 
@@ -133,7 +130,7 @@ const Form = () => {
                                 <li
                                     key={item.id || `${item.produto}` + `${i}`}
                                     className="px-3 py-2 hover:bg-gray-100 cursor-pointer"
-                                    onClick={() => selectName(item)}
+                                    onClick={() => selectName(item.id)}
                                 >
                                     {item.produto}
                                 </li>
@@ -177,7 +174,6 @@ const Form = () => {
                             placeholder="1"
                         >
                             {produto.saldoFinal}
-                            {console.log(produto.saldoFinal)}
                         </div>
                     </div>
                 </div>
@@ -191,11 +187,11 @@ const Form = () => {
                 </button>
             </form>
 
-            {isLoading && (
+            {/* {isLoading && (
                 <div className="flex justify-center mt-6">
                     <Loading message="iel" />
                 </div>
-            )}
+            )} */}
         </div>
     );
 };
