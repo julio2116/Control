@@ -62,11 +62,13 @@ const Form = () => {
     }
 
     async function selectName(item) {
+        setIsLoading(true)
         const fetchData = await fetch(URL + `?route=readOne&id=${item}`)
         const data = await fetchData.json()
         setProduto( prev => ({ ...prev, ...data.item }));
-
+        
         setFiltered([]);
+        setIsLoading(false)
     }
 
     async function handleSubmit(e) {
@@ -187,11 +189,11 @@ const Form = () => {
                 </button>
             </form>
 
-            {/* {isLoading && (
-                <div className="flex justify-center mt-6">
+            {isLoading && (
+                <div className="flex justify-center mt-12">
                     <Loading message="iel" />
                 </div>
-            )} */}
+            )}
         </div>
     );
 };
