@@ -64,7 +64,7 @@ const Form = () => {
     async function selectName(item) {
         const fetchData = await fetch(URL + `?route=readOne&id=${item}`)
         const data = await fetchData.json()
-        setProduto({ ...data.item });
+        setProduto( prev => ({ ...prev, ...data.item }));
 
         setFiltered([]);
     }
