@@ -62,15 +62,12 @@ const Form = () => {
     }
 
     async function selectName(item) {
-        console.log(URL + `?route=readOne&id=${item}`)
         const fetchData = await fetch(URL + `?route=readOne&id=${item}`)
         const data = await fetchData.json()
-        console.log(data)
         setProduto( prev => ({ ...prev, ...data.item }));
 
         setFiltered([]);
     }
-    console.log(produto)
 
     async function handleSubmit(e) {
         e.preventDefault();
@@ -126,7 +123,6 @@ const Form = () => {
                         readOnly
                         autoComplete="off"
                         />
-                        {console.log(produto.id)}
 
                     {filtered.length > 0 && (
                         <ul className="absolute top-full mt-1 w-full bg-white border border-gray-200 rounded-xl shadow-lg max-h-52 overflow-y-auto z-50">
