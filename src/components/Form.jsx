@@ -191,7 +191,7 @@ const Form = () => {
 
             {isLoading && (
                 <div className="flex justify-center mt-12">
-                    <Loading message="iel" />
+                    <Loading />
                 </div>
             )}
         </div>
