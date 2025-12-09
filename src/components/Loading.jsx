@@ -5,11 +5,11 @@ const Loading = ({ message = "IEL" }) => {
 
     for (let i = 0; i < message.length; i++) {
         letters.push(
-            <Letter letter={message[i]} index={i + 1} letterSize={48} />
+            <Letter key={i} letter={message[i]} index={i} letterSize={200} />
         );
     }
 
-    return <>{letters}</>;
+    return <div className="flex justify-center mt-12 absolute top-0">{letters}</div>;
 };
 
 export default Loading;

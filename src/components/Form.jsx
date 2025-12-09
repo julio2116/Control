@@ -62,30 +62,31 @@ const Form = () => {
     }
 
     async function selectName(item) {
-        setIsLoading(true)
-        const fetchData = await fetch(URL + `?route=readOne&id=${item}`)
-        const data = await fetchData.json()
-        setProduto( prev => ({ ...prev, ...data.item }));
-        
         setFiltered([]);
-        setIsLoading(false)
+        setIsLoading(true);
+        const fetchData = await fetch(URL + `?route=readOne&id=${item}`);
+        const data = await fetchData.json();
+        setProduto((prev) => ({ ...prev, ...data.item }));
+
+        setIsLoading(false);
     }
 
     async function handleSubmit(e) {
         e.preventDefault();
+        
         setIsLoading(true);
         try {
             const create = await submitForm(e);
             retorno(create);
-            setIsLoading(false);
             setProduto(empty);
+            setIsLoading(false);
         } catch (e) {
             setIsLoading(false);
         }
     }
 
     return (
-        <div className="w-full max-w-md mx-auto mt-10 relative">
+        <div className="w-full max-w-md mx-auto mt-10">
             <form
                 onSubmit={handleSubmit}
                 className="bg-white shadow-xl rounded-2xl p-6 space-y-5 border border-gray-100"
@@ -124,7 +125,7 @@ const Form = () => {
                         placeholder="ID"
                         readOnly
                         autoComplete="off"
-                        />
+                    />
 
                     {filtered.length > 0 && (
                         <ul className="absolute top-full mt-1 w-full bg-white border border-gray-200 rounded-xl shadow-lg max-h-52 overflow-y-auto z-50">
@@ -189,11 +190,7 @@ const Form = () => {
                 </button>
             </form>
 
-            {isLoading && (
-                <div className="flex justify-center mt-12">
-                    <Loading />
-                </div>
-            )}
+            {isLoading && <Loading />}
         </div>
     );
 };
