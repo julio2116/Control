@@ -75,5 +75,5 @@
 /* Body defaults */
 html, body {
     height: 100%;
-    font-family: none;
+    font-family: sans-serif;
 }

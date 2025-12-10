@@ -87,10 +87,10 @@ const Form = () => {
 
     return (
         <>
-            <div className="max-w-[40%] min-w-[300px] h-screen mx-auto">
+            <div className="max-w-[500px] h-screen flex items-center w-full px-[1%]">
                 <form
                     onSubmit={handleSubmit}
-                    className="bg-white shadow-xl rounded-2xl p-6 space-y-5 border border-gray-100"
+                    className="bg-white shadow-xl rounded-2xl p-6 space-y-5 border border-gray-100 min-w-full"
                 >
                     <h2 className="text-2xl font-semibold text-gray-800 text-center">
                         Baixa de itens
@@ -146,8 +146,8 @@ const Form = () => {
                         )}
                     </div>
 
-                    <div className="flex gap-[4%]">
-                        <div className="flex flex-col max-w-[48%]">
+                    <div className="flex sm:gap-[4%] flex-col gap-5 sm:flex-row">
+                        <div className="flex flex-col sm:w-1/2 min-w-[48%] w-full">
                             <label
                                 htmlFor="email"
                                 className="text-gray-600 font-medium mb-1"
@@ -165,7 +165,7 @@ const Form = () => {
                                 onChange={handleQtd}
                             />
                         </div>
-                        <div className="flex flex-col min-w-[48%] max-h-[42px]">
+                        <div className="flex flex-col sm:w-1/2 min-w-[48%] w-full sm:max-h-[42px]">
                             <span
                                 htmlFor="email"
                                 className="text-gray-600 font-medium mb-1"
@@ -190,7 +190,7 @@ const Form = () => {
                         className="w-full py-3 rounded-xl bg-blue-600 text-white font-semibold
                     hover:bg-blue-700 transition-all active:scale-[0.97]"
                     >
-                        {isLoading ? "Enviando..." : "Enviar"}
+                        Enviar
                     </button>
                 </form>
             </div>
