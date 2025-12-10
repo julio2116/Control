@@ -28,7 +28,7 @@ const Letter = ({ letter = "i", index = 1, letterSize = 48 }) => {
         result.push(
             <li
                 key={i}
-                className={`font-rye m-0 text-[white] text-center shadow-none [text-shadow:.5px_.5px_.5px_black,0_0_0.1em_#2563eb,0_0_0.15em_#2563eb]`}
+                className={`font-rye m-0 text-[white] text-center shadow-none sm:w-[150px] w-[125px] [text-shadow:.5px_.5px_.5px_black,0_0_0.1em_#2563eb,0_0_0.15em_#2563eb]`}
                 style={{ fontSize: `${letterSize}px`, fontFamily: `${font}`}}
             >
                 {newAlphabet[i]}
@@ -42,7 +42,7 @@ const Letter = ({ letter = "i", index = 1, letterSize = 48 }) => {
         const sleep = (ms) => new Promise((res) => setTimeout(res, ms));
 
         (async function () {
-            await sleep(50 + index * 250);
+            await sleep(100 + index * 250);
 
             for (let i = 0; i < newAlphabet.length; i++) {
                 if (!mounted) return;
@@ -57,7 +57,7 @@ const Letter = ({ letter = "i", index = 1, letterSize = 48 }) => {
                     const selected = Math.floor(Math.random() * 12)
                     return fonts[selected]
                 })
-                await sleep(100);
+                await sleep(80);
             }
         })();
 

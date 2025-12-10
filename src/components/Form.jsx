@@ -77,7 +77,7 @@ const Form = () => {
         setIsLoading(true);
         try {
             const create = await submitForm(e);
-            retorno(create);
+            // retorno(create);
             setProduto(empty);
             setIsLoading(false);
         } catch (e) {
@@ -194,7 +194,9 @@ const Form = () => {
                     </button>
                 </form>
             </div>
-            {isLoading && <Loading />}
+            {isLoading &&
+                <Loading />
+            }
         </>
     );
 };
