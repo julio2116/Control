@@ -5,7 +5,7 @@ const Loading = ({ message = "IEL" }) => {
 
     for (let i = 0; i < message.length; i++) {
         letters.push(
-            <Letter key={i} letter={message[i]} index={i} letterSize={200} />
+            <Letter key={i} letter={message[i]} index={i} letterSize={130} />
         );
     }
 
