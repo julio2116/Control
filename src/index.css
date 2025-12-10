@@ -1,4 +1,79 @@
 @import "tailwindcss";
-html, body, #root{
+
+/* ──────────────── CUSTOM FONTS ──────────────── */
+
+/* Bungee Shade */
+@font-face {
+    font-family: "Bungee Shade";
+    src: url("./fonts/BungeeShade-Regular.ttf") format("truetype");
+    font-weight: 400;
+}
+
+/* Faster One */
+@font-face {
+    font-family: "Faster One";
+    src: url("./fonts/FasterOne-Regular.ttf") format("truetype");
+    font-weight: 400;
+}
+
+/* Fredericka the Great */
+@font-face {
+    font-family: "Fredericka the Great";
+    src: url("./fonts/FrederickatheGreat-Regular.ttf") format("truetype");
+    font-weight: 400;
+}
+
+/* Grenze Gotisch */
+@font-face {
+    font-family: "Grenze Gotisch";
+    src: url("./fonts/GrenzeGotisch-VariableFont_wght.ttf") format("truetype");
+    font-weight: 100 900; /* variável */
+}
+
+/* Libertinus Keyboard */
+@font-face {
+    font-family: "Libertinus Keyboard";
+    src: url("./fonts/LibertinusKeyboard-Regular.ttf") format("truetype");
+    font-weight: 400;
+}
+
+/* Nabla — RENOMEADO */
+@font-face {
+    font-family: "Nabla";
+    src: url("./fonts/Nabla-Regular.ttf") format("truetype");
+    font-weight: 400;
+}
+
+/* Protest Revolution */
+@font-face {
+    font-family: "Protest Revolution";
+    src: url("./fonts/ProtestRevolution-Regular.ttf") format("truetype");
+    font-weight: 400;
+}
+
+/* Rampart One */
+@font-face {
+    font-family: "Rampart One";
+    src: url("./fonts/RampartOne-Regular.ttf") format("truetype");
+    font-weight: 400;
+}
+
+/* Rye */
+@font-face {
+    font-family: "Rye";
+    src: url("./fonts/Rye-Regular.ttf") format("truetype");
+    font-weight: 400;
+}
+
+/* Shrikhand */
+@font-face {
+    font-family: "Shrikhand";
+    src: url("./fonts/Shrikhand-Regular.ttf") format("truetype");
+    font-weight: 400;
+}
+
+/* Body defaults */
+html, body {
     height: 100%;
+    font-family: none;
 }

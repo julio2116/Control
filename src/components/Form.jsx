@@ -73,7 +73,7 @@ const Form = () => {
 
     async function handleSubmit(e) {
         e.preventDefault();
-        
+
         setIsLoading(true);
         try {
             const create = await submitForm(e);
@@ -86,112 +86,116 @@ const Form = () => {
     }
 
     return (
-        <div className="w-full max-w-md mx-auto mt-10">
-            <form
-                onSubmit={handleSubmit}
-                className="bg-white shadow-xl rounded-2xl p-6 space-y-5 border border-gray-100"
-            >
-                <h2 className="text-2xl font-semibold text-gray-800 text-center">
-                    Baixa de itens
-                </h2>
-                <div className="flex flex-col relative">
-                    <label
-                        htmlFor="nome"
-                        className="text-gray-600 font-medium mb-1"
-                    >
-                        Nome
-                    </label>
-
-                    <input
-                        id="nome"
-                        name="nome"
-                        type="text"
-                        value={produto.produto}
-                        onChange={handleNomeChange}
-                        className="px-3 py-2 rounded-xl border border-gray-300 
-                        focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        placeholder="Produto"
-                        autoComplete="off"
-                    />
-
-                    <input
-                        id="id"
-                        name="id"
-                        type="text"
-                        value={produto.id}
-                        onChange={handleNomeChange}
-                        className="px-3 py-2 rounded-xl border border-gray-300 
-                        focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        placeholder="ID"
-                        readOnly
-                        autoComplete="off"
-                    />
-
-                    {filtered.length > 0 && (
-                        <ul className="absolute top-full mt-1 w-full bg-white border border-gray-200 rounded-xl shadow-lg max-h-52 overflow-y-auto z-50">
-                            {filtered.map((item, i) => (
-                                <li
-                                    key={item.id || `${item.produto}` + `${i}`}
-                                    className="px-3 py-2 hover:bg-gray-100 cursor-pointer"
-                                    onClick={() => selectName(item.id)}
-                                >
-                                    {item.produto}
-                                </li>
-                            ))}
-                        </ul>
-                    )}
-                </div>
-
-                <div className="flex gap-[4%]">
-                    <div className="flex flex-col max-w-[48%]">
+        <>
+            <div className="max-w-[40%] min-w-[300px] h-screen mx-auto">
+                <form
+                    onSubmit={handleSubmit}
+                    className="bg-white shadow-xl rounded-2xl p-6 space-y-5 border border-gray-100"
+                >
+                    <h2 className="text-2xl font-semibold text-gray-800 text-center">
+                        Baixa de itens
+                    </h2>
+                    <div className="flex flex-col relative">
                         <label
-                            htmlFor="email"
+                            htmlFor="nome"
                             className="text-gray-600 font-medium mb-1"
                         >
-                            Quantidade da saída
+                            Nome
                         </label>
+
                         <input
-                            id="qtd"
-                            name="qtd"
+                            id="nome"
+                            name="nome"
                             type="text"
+                            value={produto.produto}
+                            onChange={handleNomeChange}
                             className="px-3 py-2 rounded-xl border border-gray-300 
                         focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            placeholder="1"
-                            value={produto.saida}
-                            onChange={handleQtd}
+                            placeholder="Produto"
+                            autoComplete="off"
                         />
-                    </div>
-                    <div className="flex flex-col min-w-[48%] max-h-[42px]">
-                        <span
-                            htmlFor="email"
-                            className="text-gray-600 font-medium mb-1"
-                        >
-                            Disponível
-                        </span>
-                        <div
-                            id="available"
-                            name="available"
+
+                        <input
+                            id="id"
+                            name="id"
                             type="text"
-                            className="px-3 py-2 rounded-xl border border-gray-300 text-[]
+                            value={produto.id}
+                            onChange={handleNomeChange}
+                            className="px-3 py-2 rounded-xl border border-gray-300 
+                        focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            placeholder="ID"
+                            readOnly
+                            autoComplete="off"
+                        />
+
+                        {filtered.length > 0 && (
+                            <ul className="absolute top-full mt-1 w-full bg-white border border-gray-200 rounded-xl shadow-lg max-h-52 overflow-y-auto z-50">
+                                {filtered.map((item, i) => (
+                                    <li
+                                        key={
+                                            item.id ||
+                                            `${item.produto}` + `${i}`
+                                        }
+                                        className="px-3 py-2 hover:bg-gray-100 cursor-pointer"
+                                        onClick={() => selectName(item.id)}
+                                    >
+                                        {item.produto}
+                                    </li>
+                                ))}
+                            </ul>
+                        )}
+                    </div>
+
+                    <div className="flex gap-[4%]">
+                        <div className="flex flex-col max-w-[48%]">
+                            <label
+                                htmlFor="email"
+                                className="text-gray-600 font-medium mb-1"
+                            >
+                                Quantidade da saída
+                            </label>
+                            <input
+                                id="qtd"
+                                name="qtd"
+                                type="text"
+                                className="px-3 py-2 rounded-xl border border-gray-300 
+                        focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                placeholder="1"
+                                value={produto.saida}
+                                onChange={handleQtd}
+                            />
+                        </div>
+                        <div className="flex flex-col min-w-[48%] max-h-[42px]">
+                            <span
+                                htmlFor="email"
+                                className="text-gray-600 font-medium mb-1"
+                            >
+                                Disponível
+                            </span>
+                            <div
+                                id="available"
+                                name="available"
+                                type="text"
+                                className="px-3 py-2 rounded-xl border border-gray-300 text-[]
                         focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-full min-w-full"
-                            placeholder="1"
-                        >
-                            {produto.saldoFinal}
+                                placeholder="1"
+                            >
+                                {produto.saldoFinal}
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <button
-                    type="submit"
-                    className="w-full py-3 rounded-xl bg-blue-600 text-white font-semibold
+                    <button
+                        type="submit"
+                        className="w-full py-3 rounded-xl bg-blue-600 text-white font-semibold
                     hover:bg-blue-700 transition-all active:scale-[0.97]"
-                >
-                    {isLoading ? "Enviando..." : "Enviar"}
-                </button>
-            </form>
-
+                    >
+                        {isLoading ? "Enviando..." : "Enviar"}
+                    </button>
+                </form>
+            </div>
             {isLoading && <Loading />}
-        </div>
+        </>
     );
 };
 

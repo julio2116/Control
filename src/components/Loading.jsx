@@ -9,7 +9,7 @@ const Loading = ({ message = "IEL" }) => {
         );
     }
 
-    return <div className="flex justify-center mt-12 absolute top-0">{letters}</div>;
+    return <div className="flex w-full h-screen justify-center items-center top-0 backdrop-blur-xs fixed">{letters}</div>;
 };
 
 export default Loading;
