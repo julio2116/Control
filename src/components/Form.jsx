@@ -177,7 +177,7 @@ const Form = () => {
                                 name="available"
                                 type="text"
                                 className="px-3 py-2 rounded-xl border border-gray-300 text-[]
-                        focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-full min-w-full"
+                        focus:outline-none focus:ring-2 focus:ring-blue-500 sm:min-h-full min-w-full min-h-[42px]"
                                 placeholder="1"
                             >
                                 {produto.saldoFinal}
