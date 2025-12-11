@@ -102,7 +102,7 @@ const Form = () => {
 
     return (
         <>
-            <main className="max-w-[500px] h-screen flex items-center justify-self-center w-full px-[1%]" role="main">
+            <main className="max-w-[500px] h-screen flex items-center m-auto w-full px-[1%]" role="main">
                 <form
                     onSubmit={handleSubmit}
                     className="bg-white shadow-xl rounded-2xl p-6 space-y-5 border border-gray-100 min-w-full"
