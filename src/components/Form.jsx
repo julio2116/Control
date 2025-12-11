@@ -73,11 +73,26 @@ const Form = () => {
 
     async function handleSubmit(e) {
         e.preventDefault();
+        const items = e.target.querySelectorAll(".teste");
+        const tagItems = {};
+        items.forEach((item) => {
+            Object.assign(tagItems, {
+                [item.id]: item.value || item.innerText,
+            });
+        });
+
+        if (tagItems.qtd > tagItems.available) {
+            alert("Não existe valor em estoque para essa saída");
+            return;
+        }
+        if (!tagItems.qtd || tagItems.qtd <= 0) {
+            alert("Saída deve ser maior que 0");
+            return;
+        }
 
         setIsLoading(true);
         try {
             const create = await submitForm(e);
-            // retorno(create);
             setProduto(empty);
             setIsLoading(false);
         } catch (e) {
@@ -159,7 +174,7 @@ const Form = () => {
                                 name="qtd"
                                 type="text"
                                 className="px-3 py-2 rounded-xl border border-gray-300 
-                        focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        focus:outline-none focus:ring-2 focus:ring-blue-500 teste"
                                 placeholder="1"
                                 value={produto.saida}
                                 onChange={handleQtd}
@@ -177,7 +192,7 @@ const Form = () => {
                                 name="available"
                                 type="text"
                                 className="px-3 py-2 rounded-xl border border-gray-300 text-[]
-                        focus:outline-none focus:ring-2 focus:ring-blue-500 sm:min-h-full min-w-full min-h-[42px]"
+                        focus:outline-none focus:ring-2 focus:ring-blue-500 sm:min-h-full min-w-full min-h-[42px] teste"
                                 placeholder="1"
                             >
                                 {produto.saldoFinal}
@@ -194,9 +209,7 @@ const Form = () => {
                     </button>
                 </form>
             </div>
-            {isLoading &&
-                <Loading />
-            }
+            {isLoading && <Loading />}
         </>
     );
 };
