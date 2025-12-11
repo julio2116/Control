@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import submitForm from "../utils/SubmitForm";
-import retorno from "../utils/return";
 import Loading from "./Loading";
 
 const Form = () => {
@@ -102,7 +101,7 @@ const Form = () => {
 
     return (
         <>
-            <div className="max-w-[500px] h-screen flex items-center justify-self-center w-full px-[1%]">
+            <div className="max-w-[500px] h-screen flex items-center m-auto w-full px-[1%]">
                 <form
                     onSubmit={handleSubmit}
                     className="bg-white shadow-xl rounded-2xl p-6 space-y-5 border border-gray-100 min-w-full"
