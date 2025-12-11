@@ -102,7 +102,7 @@ const Form = () => {
 
     return (
         <>
-            <div className="max-w-[500px] h-screen flex items-center justify-self-center w-full px-[1%]">
+            <main className="max-w-[500px] h-screen flex items-center justify-self-center w-full px-[1%]" role="main">
                 <form
                     onSubmit={handleSubmit}
                     className="bg-white shadow-xl rounded-2xl p-6 space-y-5 border border-gray-100 min-w-full"
@@ -208,7 +208,7 @@ const Form = () => {
                         Enviar
                     </button>
                 </form>
-            </div>
+            </main>
             {isLoading && <Loading />}
         </>
     );
