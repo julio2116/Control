@@ -101,10 +101,10 @@ const Form = () => {
 
     return (
         <>
-            <div className="max-w-[500px] z-[1] h-screen flex items-center m-auto w-full px-[1%]">
+            <div className="z-[1] h-screen flex items-center m-auto justify-center w-full px-[5%]">
                 <form
                     onSubmit={handleSubmit}
-                    className="bg-white shadow-xl rounded-2xl p-6 space-y-5 border border-gray-100 min-w-full"
+                    className="bg-white shadow-xl rounded-2xl p-6 space-y-5 border border-gray-100 max-w-[500px] w-full"
                 >
                     <h2 className="text-2xl font-semibold text-gray-800 text-center">
                         Baixa de itens

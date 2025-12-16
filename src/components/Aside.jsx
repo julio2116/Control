@@ -1,38 +1,37 @@
-import { useState } from "react";
+import { Link } from "react-router";
 
-const Aside = ({ onGetMenu = null, onSetShow = null, showMenu }) => {
-    const [movement, setMovement] = useState("0")
-
-    function activateMenu(value) {
-        setMovement( value ? "0" : "-60%")
-        onGetMenu(value);
-    }
-    const mobile = onSetShow!==null && onGetMenu!==null;
-console.log(mobile)
-    const aside = (
-        <aside
-            style={{ transform: `translateX(${movement})` }}
-            className={`bg-red-500 h-screen ${
-                mobile ? "fixed z-20 top-0 w-[60%]" : "min-w-full"
-            } transition-all duration-300`}
-        >
-            teste
-        </aside>
-    );
-
-    if (!mobile) {
-        return <>{aside}</>;
-    }
+const Aside = ({ isOpen, onClose }) => {
     return (
         <>
-            {aside}
             <div
-                className="w-full h-screen fixed bg-[#00000080] top-0 left-0 z-10"
-                onClick={() => {
-                    activateMenu(false);
-                    onSetShow("block");
-                }}
-            >super teste</div>
+                onClick={onClose}
+                className={`
+          fixed inset-0 bg-black/10 z-40
+          transition-opacity duration-300
+          md:hidden
+          ${isOpen ? "opacity-100" : "opacity-0 pointer-events-none"}
+        `}
+            />
+
+            <aside
+                className={`
+          fixed md:static top-0 left-0 z-50
+          pt-10 text-2xl
+          w-[60%] md:w-[300px] h-screen
+          backdrop-blur-xs
+          transition-transform duration-300
+          ${isOpen ? "translate-x-0" : "-translate-x-full"}
+          md:translate-x-0
+        `}
+            >
+                <nav className="p-4 space-y-2">
+                    <ul>
+                        <li>
+                            <Link to={"/"}>Excluir itens</Link>
+                        </li>
+                    </ul>
+                </nav>
+            </aside>
         </>
     );
 };
