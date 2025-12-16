@@ -1,17 +1,17 @@
-import { Outlet } from "react-router"
-import Aside from "../components/Aside.jsx"
+import { Outlet } from "react-router";
+import SideMenu from "../components/SideMenu.jsx";
 
 const Home = () => {
-    return(
+    return (
         <>
             <div className="flex">
-                <Aside />
-                <main className="w-full">
+                <main className="w-full flex">
+                    <SideMenu />
                     <Outlet />
                 </main>
             </div>
         </>
-    )
-}
+    );
+};
 
-export default Home
+export default Home;
