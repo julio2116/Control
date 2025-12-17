@@ -1,15 +1,20 @@
 import { createBrowserRouter } from "react-router";
-import Form from "../components/Form";
-import Loading from "../components/Loading";
+import Home from "../pages/Home.jsx";
+import DeleteForm from "../components/DeleteForm.jsx"
+import Main from "../components/Main.jsx";
+import CreateForm from "../components/CreateForm.jsx";
+import AlterForm from "../components/AlterForm.jsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    Component: Form,
-  },
-  {
-    path: "/letter",
-    Component: Loading
+    Component: Home,
+    children: [
+      {index: true, Component: Main},
+      {path: "/baixar", Component: DeleteForm},
+      {path: "/criar", Component: CreateForm},
+      {path: "/alterar", Component: AlterForm},
+    ]
   }
 ]);
 

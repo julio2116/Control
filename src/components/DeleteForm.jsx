@@ -1,9 +1,8 @@
 import { useState, useEffect } from "react";
 import submitForm from "../utils/SubmitForm";
-import retorno from "../utils/return";
 import Loading from "./Loading";
 
-const Form = () => {
+const DeleteForm = () => {
     const empty = {
         produto: "",
         id: "",
@@ -102,19 +101,17 @@ const Form = () => {
 
     return (
         <>
-            <main className="max-w-[500px] h-screen flex items-center m-auto w-full px-[1%]" role="main">
+            <div className="relative z-[1] h-screen flex items-center m-auto justify-center w-full px-[5%]">
                 <form
                     onSubmit={handleSubmit}
-                    className="bg-white shadow-xl rounded-2xl p-6 space-y-5 border border-gray-100 min-w-full"
+                    className="backdrop-blur-lg text-black shadow-2xl rounded-2xl p-6 space-y-5 border border-gray-100 max-w-[500px] w-full"
                 >
-                    <h2 className="text-2xl font-semibold text-gray-800 text-center">
+                    <div className="absolute -z-10 m-0 inset-0 bg-white/40 backdrop-blur-md rounded-2xl"></div>
+                    <h2 className="text-2xl font-semibold text-center">
                         Baixa de itens
                     </h2>
-                    <div className="flex flex-col relative">
-                        <label
-                            htmlFor="nome"
-                            className="text-gray-600 font-medium mb-1"
-                        >
+                    <div className="flex flex-col relative gap-1">
+                        <label htmlFor="nome" className="font-medium mb-1">
                             Nome
                         </label>
 
@@ -163,10 +160,7 @@ const Form = () => {
 
                     <div className="flex sm:gap-[4%] flex-col gap-5 sm:flex-row">
                         <div className="flex flex-col sm:w-1/2 min-w-[48%] w-full">
-                            <label
-                                htmlFor="email"
-                                className="text-gray-600 font-medium mb-1"
-                            >
+                            <label htmlFor="email" className="font-medium mb-1">
                                 Quantidade da saída
                             </label>
                             <input
@@ -181,10 +175,7 @@ const Form = () => {
                             />
                         </div>
                         <div className="flex flex-col sm:w-1/2 min-w-[48%] w-full sm:max-h-[42px]">
-                            <span
-                                htmlFor="email"
-                                className="text-gray-600 font-medium mb-1"
-                            >
+                            <span htmlFor="email" className="font-medium mb-1">
                                 Disponível
                             </span>
                             <div
@@ -214,4 +205,4 @@ const Form = () => {
     );
 };
 
-export default Form;
+export default DeleteForm;
