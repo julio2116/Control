@@ -8,8 +8,6 @@ const Aside = ({ isOpen, onClose }) => {
     const rotas = ["baixar", "criar", "alterar"];
     const activeClass = "bg-[#f2f5ff] relative rounded-l-4xl px-4 py-2"
 
-    console.log(location.pathname.replace("/", ""));
-
     useEffect(() => {
         const index = rotas.indexOf(location.pathname.replace("/", "")) + 1
         setActive(index);
