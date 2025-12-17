@@ -24,10 +24,14 @@ const Aside = ({ isOpen, onClose }) => {
           md:translate-x-0
         `}
             >
+                <div className="absolute -z-10 m-0 inset-0 bg-blue-200/40 backdrop-blur-md rounded-r-2xl"></div>
                 <nav className="p-4 space-y-2">
-                    <ul>
+                    <ul className="flex flex-col gap-5">
                         <li>
-                            <Link to={"/"}>Excluir itens</Link>
+                            <Link to={"/excluir"}>Excluir itens</Link>
+                        </li>
+                        <li>
+                            <Link to={"/excluir"}>Excluir itens</Link>
                         </li>
                     </ul>
                 </nav>
