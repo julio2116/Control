@@ -11,7 +11,7 @@ const router = createBrowserRouter([
     Component: Home,
     children: [
       {index: true, Component: Main},
-      {path: "/deletar", Component: DeleteForm},
+      {path: "/baixar", Component: DeleteForm},
       {path: "/criar", Component: CreateForm},
       {path: "/alterar", Component: AlterForm},
     ]

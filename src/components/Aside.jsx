@@ -1,23 +1,37 @@
-import { useState } from "react";
-import { Link } from "react-router";
+import { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router";
 
 const Aside = ({ isOpen, onClose }) => {
-    const [active, setActive] = useState();
+    const [active, setActive] = useState(0);
+    const location = useLocation();
 
-    const rotas = ["deletar", "criar", "alterar"];
+    const rotas = ["baixar", "criar", "alterar"];
+    const activeClass = "bg-[#f2f5ff] relative rounded-l-4xl px-4 py-2"
+
+    console.log(location.pathname.replace("/", ""));
+
+    useEffect(() => {
+        const index = rotas.indexOf(location.pathname.replace("/", "")) + 1
+        setActive(index);
+    }, [location]);
 
     const items = [];
 
     for (let i = 0; i < rotas.length; i++) {
-        const formatWord = (rotas[i])[0].toUpperCase() + rotas[i].slice(1)
+        const formatWord = rotas[i][0].toUpperCase() + rotas[i].slice(1);
         items.push(
-            <li
-                id={`item-${i}`}
-                key={i}
-                onClick={(e) => setActive(e.target.id.split("-")[1])}
-                className={`${active === i ? "bg-blue-500" : ""}`}
-            >
-                <Link to={`/${rotas[i]}`}>{formatWord} itens</Link>
+            <li id={`item-${i + 1}`} key={i}>
+                <Link to={`/${rotas[i]}`}>
+                    <div
+                        className={`${
+                            active === i + 1
+                                ? activeClass
+                                : "py-2"
+                        } hover:${activeClass}`}
+                    >
+                        {formatWord} itens
+                    </div>
+                </Link>
             </li>
         );
     }
@@ -46,8 +60,8 @@ const Aside = ({ isOpen, onClose }) => {
         `}
             >
                 <div className="absolute -z-10 m-0 inset-0 bg-blue-200/40 backdrop-blur-md rounded-r-2xl"></div>
-                <nav className="p-4 space-y-2">
-                    <ul className="flex flex-col gap-5 ml-3">{items}</ul>
+                <nav className="p-4 pr-0 space-y-2">
+                    <ul className="flex flex-col ml-3 gap-1">{items}</ul>
                 </nav>
             </aside>
         </>
