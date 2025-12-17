@@ -1,7 +1,9 @@
 import { createBrowserRouter } from "react-router";
 import Home from "../pages/Home.jsx";
-import Form from "../components/Form.jsx"
+import DeleteForm from "../components/DeleteForm.jsx"
 import Main from "../components/Main.jsx";
+import CreateForm from "../components/CreateForm.jsx";
+import AlterForm from "../components/AlterForm.jsx";
 
 const router = createBrowserRouter([
   {
@@ -9,7 +11,9 @@ const router = createBrowserRouter([
     Component: Home,
     children: [
       {index: true, Component: Main},
-      {path: "/excluir", Component: Form}
+      {path: "/deletar", Component: DeleteForm},
+      {path: "/criar", Component: CreateForm},
+      {path: "/alterar", Component: AlterForm},
     ]
   }
 ]);

@@ -1,6 +1,27 @@
+import { useState } from "react";
 import { Link } from "react-router";
 
 const Aside = ({ isOpen, onClose }) => {
+    const [active, setActive] = useState();
+
+    const rotas = ["deletar", "criar", "alterar"];
+
+    const items = [];
+
+    for (let i = 0; i < rotas.length; i++) {
+        const formatWord = (rotas[i])[0].toUpperCase() + rotas[i].slice(1)
+        items.push(
+            <li
+                id={`item-${i}`}
+                key={i}
+                onClick={(e) => setActive(e.target.id.split("-")[1])}
+                className={`${active === i ? "bg-blue-500" : ""}`}
+            >
+                <Link to={`/${rotas[i]}`}>{formatWord} itens</Link>
+            </li>
+        );
+    }
+
     return (
         <>
             <div
@@ -26,14 +47,7 @@ const Aside = ({ isOpen, onClose }) => {
             >
                 <div className="absolute -z-10 m-0 inset-0 bg-blue-200/40 backdrop-blur-md rounded-r-2xl"></div>
                 <nav className="p-4 space-y-2">
-                    <ul className="flex flex-col gap-5">
-                        <li>
-                            <Link to={"/excluir"}>Excluir itens</Link>
-                        </li>
-                        <li>
-                            <Link to={"/excluir"}>Excluir itens</Link>
-                        </li>
-                    </ul>
+                    <ul className="flex flex-col gap-5 ml-3">{items}</ul>
                 </nav>
             </aside>
         </>

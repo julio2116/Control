@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import submitForm from "../utils/SubmitForm";
 import Loading from "./Loading";
 
-const Form = () => {
+const DeleteForm = () => {
     const empty = {
         produto: "",
         id: "",
@@ -205,4 +205,4 @@ const Form = () => {
     );
 };
 
-export default Form;
+export default DeleteForm;
