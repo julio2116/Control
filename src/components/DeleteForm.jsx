@@ -199,7 +199,7 @@ const DeleteForm = () => {
                         Enviar
                     </button>
                 </form>
-            </main>
+            </div>
             {isLoading && <Loading />}
         </>
     );
