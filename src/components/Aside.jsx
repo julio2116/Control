@@ -5,8 +5,9 @@ const Aside = ({ isOpen, onClose }) => {
     const [active, setActive] = useState(0);
     const location = useLocation();
 
-    const rotas = ["baixar", "criar", "alterar"];
-    const activeClass = "bg-[#f2f5ff] relative rounded-l-4xl px-4 py-2"
+    const rotas = ["baixar", "incluir", "alterar"];
+    const activeClass = "bg-[#F2F5FF] relative rounded-l-4xl px-4 py-2 text-[#1447E6]"
+    const activeClassHover = "hover:bg-[#F2F5FF] hover:relative hover:rounded-l-4xl hover:px-4 hover:text-[#1447E6]"
 
     useEffect(() => {
         const index = rotas.indexOf(location.pathname.replace("/", "")) + 1
@@ -18,14 +19,14 @@ const Aside = ({ isOpen, onClose }) => {
     for (let i = 0; i < rotas.length; i++) {
         const formatWord = rotas[i][0].toUpperCase() + rotas[i].slice(1);
         items.push(
-            <li id={`item-${i + 1}`} key={i}>
+            <li id={`item-${i + 1}`} key={i} onClick={onClose}>
                 <Link to={`/${rotas[i]}`}>
                     <div
                         className={`${
                             active === i + 1
                                 ? activeClass
-                                : "py-2"
-                        } hover:${activeClass}`}
+                                : "py-2 px-4"
+                        } ${activeClassHover}`}
                     >
                         {formatWord} itens
                     </div>
@@ -50,16 +51,17 @@ const Aside = ({ isOpen, onClose }) => {
                 className={`
           fixed md:static top-0 left-0 z-50
           pt-10 text-2xl
-          w-[60%] md:w-[300px] h-screen
-          backdrop-blur-xs
+          w-[60%] md:max-w-[300px] h-screen
+          backdrop-blur-sm
           transition-transform duration-300
+          shadow-2xl rounded-r-2xl
           ${isOpen ? "translate-x-0" : "-translate-x-full"}
           md:translate-x-0
         `}
             >
-                <div className="absolute -z-10 m-0 inset-0 bg-blue-200/40 backdrop-blur-md rounded-r-2xl"></div>
+                <div className="absolute -z-10 m-0 inset-0 bg-[#ffffff63] rounded-r-2xl"></div>
                 <nav className="p-4 pr-0 space-y-2">
-                    <ul className="flex flex-col ml-3 gap-1">{items}</ul>
+                    <ul className="flex flex-col ml-3 gap-1 min-w-fit">{items}</ul>
                 </nav>
             </aside>
         </>

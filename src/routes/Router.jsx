@@ -12,7 +12,7 @@ const router = createBrowserRouter([
     children: [
       {index: true, Component: Main},
       {path: "/baixar", Component: DeleteForm},
-      {path: "/criar", Component: CreateForm},
+      {path: "/incluir", Component: CreateForm},
       {path: "/alterar", Component: AlterForm},
     ]
   }
