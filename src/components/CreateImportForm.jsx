@@ -45,7 +45,7 @@ const CreateImportForm = () => {
 
   return (
     <>
-      <div className="relative z-[1] flex items-center m-auto justify-center w-full px-[5%]">
+      <div className="relative z-[1] flex items-center justify-center w-full px-[5%]">
         <form
           onSubmit={handleSend}
           className="flex flex-col gap-5 backdrop-blur-lg text-black shadow-2xl
