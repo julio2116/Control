@@ -91,7 +91,7 @@ const DeleteForm = () => {
 
         setIsLoading(true);
         try {
-            const create = await submitForm(e);
+            await submitForm(e, "delete");
             setProduto(empty);
             setIsLoading(false);
         } catch (e) {
@@ -205,7 +205,7 @@ const DeleteForm = () => {
                     <button
                         type="submit"
                         className="w-full py-3 rounded-xl bg-blue-600 text-white font-semibold
-                    hover:bg-blue-700 transition-all active:scale-[0.97]"
+                    hover:bg-blue-700 transition-all active:scale-[0.97] hover:cursor-pointer"
                     >
                         Enviar
                     </button>

@@ -1,4 +1,4 @@
-class NewItem {
+class DeleteItem {
     constructor(nome, id, qtd) {
         this.id = id;
         this.nome = nome;
@@ -35,8 +35,8 @@ class NewItem {
     }
 
     static KeysAndValues(objeto = null) {
-        if (!objeto || !(objeto instanceof NewItem)) {
-            throw new Error("Aceita apenas instancias de NewItem");
+        if (!objeto || !(objeto instanceof DeleteItem)) {
+            throw new Error("Aceita apenas instancias de DeleteItem");
         }
 
         let formatObjeto = "";
@@ -49,4 +49,4 @@ class NewItem {
 
 }
 
-export { NewItem };
+export default DeleteItem;
