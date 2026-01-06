@@ -2,18 +2,18 @@ import { useState } from "react";
 
 const CreateManualForm = () => {
   const [produtos, setProdutos] = useState([
-    { descricao: "", qtd: "", valor: "" },
+    { descricao: "", qtd: "", valor: "", id: crypto.randomUUID() },
   ]);
 
   function addProduto() {
     setProdutos((prev) => [
       ...prev,
-      { descricao: "", qtd: "", valor: "" },
+      { descricao: "", qtd: "", valor: "", id: crypto.randomUUID() },
     ]);
   }
 
   function removeProduto(index) {
-    setProdutos((prev) => prev.filter((_, i) => i !== index));
+    setProdutos((prev) => prev.filter((produto) => produto.id !== index));
   }
 
   return (
@@ -36,16 +36,16 @@ const CreateManualForm = () => {
         <div className="space-y-4">
           <h3 className="font-semibold">Produtos</h3>
 
-          {produtos.map((_, i) => (
+          {produtos.map((produto) => (
             <div
-              key={i}
+              key={produto.id}
               className="border border-gray-200 rounded-xl p-3 space-y-3 relative"
             >
               {produtos.length > 1 && (
                 <button
                   type="button"
-                  onClick={() => removeProduto(i)}
-                  className="absolute top-2 right-2 text-sm text-red-500 hover:underline"
+                  onClick={() => removeProduto(produto.id)}
+                  className="absolute top-2 z-100 right-2 text-sm text-red-500 hover:underline"
                 >
                   Remover
                 </button>
@@ -80,12 +80,12 @@ const CreateManualForm = () => {
 
 /* ===== INPUT COM LABEL FLUTUANTE ===== */
 const FloatingInput = ({ label }) => (
-  <label className="relative block focus-within:[&>span]:-top-5">
+  <label className="relative block focus-within:[&>span]:-top-2.5">
     <input
       placeholder=" "
-      className="px-3 py-2 border-b-2 border-b-blue-500 w-full peer focus:outline-none"
+      className="px-3 py-2 my-1 border-b-2 border-b-blue-500 w-full peer focus:outline-none"
     />
-    <span className="absolute top-2.5 left-3 transition-all duration-200 peer-not-placeholder-shown:-top-5 text-gray-600">
+    <span className="absolute top-3.5 left-3 transition-all duration-200 peer-not-placeholder-shown:-top-2.5 text-gray-600">
       {label}
     </span>
   </label>
