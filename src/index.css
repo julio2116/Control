@@ -73,7 +73,7 @@
 }
 
 /* Body defaults */
-html, body {
+html, body, #root {
     height: 100%;
     font-family: sans-serif;
 }

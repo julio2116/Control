@@ -25,7 +25,7 @@ const Aside = ({ isOpen, onClose }) => {
                         className={`${
                             active === i + 1
                                 ? activeClass
-                                : "py-2 px-4"
+                                : "py-2 px-4 min-w-fit"
                         } ${activeClassHover}`}
                     >
                         {formatWord} itens
@@ -51,16 +51,17 @@ const Aside = ({ isOpen, onClose }) => {
                 className={`
           fixed md:static top-0 left-0 z-50
           pt-10 text-2xl
-          w-[60%] md:max-w-[300px] h-screen
+          md:max-w-[300px] h-screen
           backdrop-blur-sm
           transition-transform duration-300
           shadow-2xl rounded-r-2xl
+          min-w-[60%]
           ${isOpen ? "translate-x-0" : "-translate-x-full"}
           md:translate-x-0
         `}
             >
                 <div className="absolute -z-10 m-0 inset-0 bg-[#ffffff63] rounded-r-2xl"></div>
-                <nav className="p-4 pr-0 space-y-2">
+                <nav className="p-4 pr-0 space-y-2 min-w-fit">
                     <ul className="flex flex-col ml-3 gap-1 min-w-fit">{items}</ul>
                 </nav>
             </aside>

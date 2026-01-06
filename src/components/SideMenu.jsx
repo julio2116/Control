@@ -6,17 +6,21 @@ const SideMenu = () => {
 
     return (
         <>
-            <div
-                className={`${isOpen ? "hidden" : "block"} md:hidden p-3 rounded-full backdrop-blur-2xl w-[15%] max-w-[60px] top-5 left-5 fixed z-[49] shadow-2xl`}
-            >
-                <img
-                    className="w-full"
-                    onClick={() => setIsOpen(true)}
-                    src="/menu.png"
-                />
-            </div>
+            <div className="fixed md:static z-[49] md:min-w-[15%] max-w-[60%]">
+                <div
+                    className={`${
+                        isOpen ? "hidden" : "block"
+                    } md:hidden p-3 rounded-full backdrop-blur-2xl min-w-[16%] max-w-[50px] fixed top-5 left-5 shadow-2xl`}
+                >
+                    <img
+                        className="w-full"
+                        onClick={() => setIsOpen(true)}
+                        src="/menu.png"
+                    />
+                </div>
 
-            <Aside isOpen={isOpen} onClose={() => setIsOpen(false)} />
+                <Aside isOpen={isOpen} onClose={() => setIsOpen(false)} />
+            </div>
         </>
     );
 };
