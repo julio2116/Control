@@ -52,7 +52,7 @@ const CreateForm = () => {
                      rounded-2xl p-6 space-y-5 border border-gray-100
                      max-w-[500px] w-full"
         >
-          <div className="absolute -z-10 inset-0 bg-white/40 backdrop-blur-md rounded-2xl" />
+          <div className="absolute -z-10 inset-0 bg-white/40 backdrop-blur-md rounded-2xl m-0" />
 
           <h2 className="text-2xl font-semibold text-center">
             Importar Notas Fiscais
