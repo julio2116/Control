@@ -1,6 +1,6 @@
 import * as pdfjsLib from "pdfjs-dist";
 import Tesseract from "tesseract.js";
-import { parseXMLContent } from "./parseXMLCOntent";
+import { parseXMLContent } from "./parseXMLContent";
 
 /* =========================
    PDF WORKER
