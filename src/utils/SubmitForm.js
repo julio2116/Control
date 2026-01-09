@@ -4,11 +4,11 @@ import CreateItem from "../classes/createItem";
 const submitForm = async (e, type, payload) => {
     const URL = import.meta.env.VITE_URL;
     e.preventDefault();
+    console.log(payload)
     
     if(!payload){
         const data = new FormData(e.target);
         payload = Object.fromEntries(data);
-    
         for(const [key, value] of Object.entries(payload)){
             if(!value) throw new Error('PREENCHA TODOS OS ITENS')
         }
@@ -31,7 +31,8 @@ function formatData(payload, type){
             return DeleteItem.KeysAndValues(newDeleteItem);
             
         case "create":
-            const newCreateItem = new CreateItem(...Object.values(payload[0]));
+            payload.chave = payload.chave.replaceAll(" ", "")
+            const newCreateItem = new CreateItem(...Object.values(payload));
             return CreateItem.KeysAndValues(newCreateItem);
             
         default:

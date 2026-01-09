@@ -1,9 +1,32 @@
 import { useState } from "react";
+import submitForm from "../utils/SubmitForm";
 
 const CreateManualForm = () => {
+  const [nf, setNF] = useState({
+    fileName: "manual",
+    chave: "",
+    numeroNota: "",
+    dataEmissao: "",
+    nomeEmitente: "",
+    cnpjEmitente: "",
+  });
+
   const [produtos, setProdutos] = useState([
     { descricao: "", qtd: "", valor: "", id: crypto.randomUUID() },
   ]);
+
+  /* ===== HANDLERS ===== */
+  function handleNFChange(e) {
+    setNF({ ...nf, [e.target.name]: e.target.value });
+  }
+
+  function handleProdutoChange(id, field, value) {
+    setProdutos((prev) =>
+      prev.map((p) =>
+        p.id === id ? { ...p, [field]: value } : p
+      )
+    );
+  }
 
   function addProduto() {
     setProdutos((prev) => [
@@ -12,13 +35,31 @@ const CreateManualForm = () => {
     ]);
   }
 
-  function removeProduto(index) {
-    setProdutos((prev) => prev.filter((produto) => produto.id !== index));
+  function removeProduto(id) {
+    setProdutos((prev) => prev.filter((p) => p.id !== id));
+  }
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+
+    const payload = {
+      ...nf,
+      produtos: produtos.map(({ descricao, qtd, valor }) => ({
+        descricao,
+        qtd,
+        valor,
+      })),
+    };
+
+    await submitForm(e, "create", payload);
   }
 
   return (
-    <div className=" h-full z-[1] flex items-center justify-center px-[5%] md:mt-0 w-full">
-      <form className="flex flex-col gap-5 backdrop-blur-lg text-black shadow-2xl rounded-2xl p-6 border border-gray-100 max-w-[500px] w-full">
+    <div className="h-full z-[1] flex items-center justify-center px-[5%] w-full">
+      <form
+        onSubmit={handleSubmit}
+        className="relative flex flex-col gap-5 backdrop-blur-lg text-black shadow-2xl rounded-2xl p-6 border border-gray-100 max-w-[500px] w-full"
+      >
         <div className="absolute -z-10 inset-0 bg-white/40 backdrop-blur-md rounded-2xl" />
 
         <h2 className="text-2xl font-semibold text-center">
@@ -26,11 +67,11 @@ const CreateManualForm = () => {
         </h2>
 
         {/* ===== DADOS DA NF ===== */}
-        <FloatingInput label="Chave" />
-        <FloatingInput label="CNPJ Emitente" />
-        <FloatingInput label="Data de Emissão" />
-        <FloatingInput label="Emitente" />
-        <FloatingInput label="Número da Nota" />
+        <FloatingInput name="chave" label="Chave" onChange={handleNFChange} />
+        <FloatingInput name="cnpjEmitente" label="CNPJ Emitente" onChange={handleNFChange} />
+        <FloatingInput name="dataEmissao" label="Data Emissão" onChange={handleNFChange} />
+        <FloatingInput name="nomeEmitente" label="Nome Emitente" onChange={handleNFChange} />
+        <FloatingInput name="numeroNota" label="Número da Nota" onChange={handleNFChange} />
 
         {/* ===== PRODUTOS ===== */}
         <div className="space-y-4">
@@ -45,15 +86,30 @@ const CreateManualForm = () => {
                 <button
                   type="button"
                   onClick={() => removeProduto(produto.id)}
-                  className="absolute top-2 z-100 right-2 text-sm text-red-500 hover:underline"
+                  className="absolute top-2 right-2 text-sm text-red-500 hover:underline"
                 >
                   Remover
                 </button>
               )}
 
-              <FloatingInput label="Descrição do Produto" />
-              <FloatingInput label="Quantidade" />
-              <FloatingInput label="Valor" />
+              <FloatingInput
+                label="Descrição do Produto"
+                onChange={(e) =>
+                  handleProdutoChange(produto.id, "descricao", e.target.value)
+                }
+              />
+              <FloatingInput
+                label="Quantidade"
+                onChange={(e) =>
+                  handleProdutoChange(produto.id, "qtd", e.target.value)
+                }
+              />
+              <FloatingInput
+                label="Valor"
+                onChange={(e) =>
+                  handleProdutoChange(produto.id, "valor", e.target.value)
+                }
+              />
             </div>
           ))}
 
@@ -79,10 +135,12 @@ const CreateManualForm = () => {
 };
 
 /* ===== INPUT COM LABEL FLUTUANTE ===== */
-const FloatingInput = ({ label }) => (
+const FloatingInput = ({ label, name, onChange }) => (
   <label className="relative block focus-within:[&>span]:-top-2.5">
     <input
+      name={name}
       placeholder=" "
+      onChange={onChange}
       className="px-3 py-2 my-1 border-b-2 border-b-blue-500 w-full peer focus:outline-none"
     />
     <span className="absolute top-3.5 left-3 transition-all duration-200 peer-not-placeholder-shown:-top-2.5 text-gray-600">
