@@ -10,7 +10,7 @@ const SideMenu = () => {
                 <div
                     className={`${
                         isOpen ? "hidden" : "block"
-                    } md:hidden p-3 rounded-full backdrop-blur-2xl min-w-[16%] max-w-[50px] fixed top-5 left-5 shadow-2xl`}
+                    } md:hidden p-3 rounded-full backdrop-blur-2xl min-w-[15%] max-w-[50px] top-5 left-5 shadow-2xl`}
                 >
                     <img
                         className="w-full"

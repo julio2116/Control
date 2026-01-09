@@ -49,13 +49,14 @@ const Aside = ({ isOpen, onClose }) => {
 
             <aside
                 className={`
-          fixed md:static top-0 left-0 z-50
+          fixed top-0 left-0 z-50
           pt-10 text-2xl
-          md:max-w-[300px] h-screen
+          md:max-w-[300px] h-full
           backdrop-blur-sm
           transition-transform duration-300
           shadow-2xl rounded-r-2xl
           min-w-[60%]
+          md:min-w-[15%]
           ${isOpen ? "translate-x-0" : "-translate-x-full"}
           md:translate-x-0
         `}

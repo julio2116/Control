@@ -17,7 +17,7 @@ const CreateManualForm = () => {
   }
 
   return (
-    <div className="relative z-[1] flex items-center justify-center px-[5%] md:mt-0 w-full">
+    <div className=" h-full z-[1] flex items-center justify-center px-[5%] md:mt-0 w-full">
       <form className="flex flex-col gap-5 backdrop-blur-lg text-black shadow-2xl rounded-2xl p-6 border border-gray-100 max-w-[500px] w-full">
         <div className="absolute -z-10 inset-0 bg-white/40 backdrop-blur-md rounded-2xl" />
 
