@@ -31,7 +31,7 @@ function formatData(payload, type){
             return DeleteItem.KeysAndValues(newDeleteItem);
             
         case "create":
-            payload.chave = payload.chave.replaceAll(" ", "")
+            payload.chave = payload.chave.replaceAll(" ", "");
             const newCreateItem = new CreateItem(...Object.values(payload));
             return CreateItem.KeysAndValues(newCreateItem);
             
