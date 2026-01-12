@@ -25,14 +25,18 @@ const submitForm = async (e, type, payload) => {
 };
 
 function formatData(payload, type){
+    const {fileName, chave, numeroNota, dataEmissao, nomeEmitente, cnpjEmitente, produtos} = payload;
+
     switch(type){
         case "delete":
-            const newDeleteItem = new DeleteItem(...Object.values(payload));
+            const newDeleteItem = new DeleteItem(fileName, chave, numeroNota, dataEmissao, nomeEmitente, cnpjEmitente, produtos);
+
             return DeleteItem.KeysAndValues(newDeleteItem);
             
         case "create":
-            payload.chave = payload.chave.replaceAll(" ", "");
-            const newCreateItem = new CreateItem(...Object.values(payload));
+            console.log(chave)
+            const newChave = chave.replaceAll(" ", "");
+            const newCreateItem = new CreateItem(fileName, newChave, numeroNota, dataEmissao, nomeEmitente, cnpjEmitente, produtos);
             return CreateItem.KeysAndValues(newCreateItem);
             
         default:

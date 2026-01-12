@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import {
   processXMLFiles,
   processPDFs,
-  sendToN8N,
+  pdfInterpreterAI,
 } from "../utils/readData";
 import Loading from "./Loading";
 import submitForm from "../utils/SubmitForm";
@@ -16,10 +16,7 @@ const CreateImportForm = () => {
   const [xmlJSON, setXmlJSON] = useState([]);
   const [pdfJSON, setPdfJSON] = useState([]);
 
-  const webhook = "https://n8n-project-3h24.onrender.com/webhook/uploadpdf";
-
   async function handleXML(e) {
-    console.log(e)
     setIsLoading(true);
     const result = await processXMLFiles(xmlRef.current.files, setStatus);
     setXmlJSON(result);
@@ -29,7 +26,7 @@ const CreateImportForm = () => {
   
   async function handlePDF(e) {
     setIsLoading(true);
-    const result = await processPDFs(e, setStatus);
+    const result = await processPDFs(e.target.files, setStatus);
     setPdfJSON(result);
     xmlRef.current.value = "";
     setIsLoading(false);
@@ -37,8 +34,11 @@ const CreateImportForm = () => {
 
   async function handleSend(e) {
     setIsLoading(true);
-    console.log(xmlJSON)
-    if(pdfJSON) await sendToN8N(pdfJSON, webhook, setStatus);
+    console.log(pdfJSON)
+    if(pdfJSON) {
+      const data = await pdfInterpreterAI(e, pdfJSON, setStatus);
+      await submitForm(e, "create", data);
+    }
     if(xmlJSON) await submitForm(e, "create", xmlJSON);
     setIsLoading(false);
   }
