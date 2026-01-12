@@ -4,7 +4,6 @@ import CreateItem from "../classes/createItem";
 const submitForm = async (e, type, payload) => {
     const URL = import.meta.env.VITE_URL;
     e.preventDefault();
-    console.log(payload)
     
     if(!payload){
         const data = new FormData(e.target);
@@ -15,7 +14,6 @@ const submitForm = async (e, type, payload) => {
     }
 
     const formatedData = formatData(payload, type);
-    console.log(formatedData)
 
     const url = `${URL + "?route=" + type + "&" + formatedData}`;
     const resposta = await fetch(url);
@@ -30,11 +28,9 @@ function formatData(payload, type){
     switch(type){
         case "delete":
             const newDeleteItem = new DeleteItem(fileName, chave, numeroNota, dataEmissao, nomeEmitente, cnpjEmitente, produtos);
-
             return DeleteItem.KeysAndValues(newDeleteItem);
             
         case "create":
-            console.log(chave)
             const newChave = chave.replaceAll(" ", "");
             const newCreateItem = new CreateItem(fileName, newChave, numeroNota, dataEmissao, nomeEmitente, cnpjEmitente, produtos);
             return CreateItem.KeysAndValues(newCreateItem);
