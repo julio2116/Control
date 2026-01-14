@@ -15,7 +15,8 @@ const submitForm = async (e, type, payload) => {
 
     const formatedData = formatData(payload, type);
 
-    const url = `${URL + "?route=" + type + "&" + formatedData}`;
+    const url = URL + "?route=" + type + "&" + formatedData;
+    console.log(url)
     const resposta = await fetch(url);
     const dados = await resposta.json();
 
@@ -31,7 +32,7 @@ function formatData(payload, type){
             return DeleteItem.KeysAndValues(newDeleteItem);
             
         case "create":
-            const newChave = chave.replaceAll(" ", "");
+            // const newChave = chave.replaceAll(" ", "");
             const newCreateItem = new CreateItem(fileName, newChave, numeroNota, dataEmissao, nomeEmitente, cnpjEmitente, produtos);
             return CreateItem.KeysAndValues(newCreateItem);
             

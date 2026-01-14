@@ -65,7 +65,6 @@ export function processXMLFiles(files, onStatus) {
    PDF + OCR
 ========================= */
 export async function processPDFs(files, onStatus) {
-    console.log(files);
     if (!files.length) {
         onStatus?.("Nenhum PDF selecionado");
         return [];
@@ -160,8 +159,25 @@ const nfSchema = {
     ],
 };
 
+const nfBatchSchema = {
+    type: "object",
+    properties: {
+        notas: {
+            type: "array",
+            items: nfSchema,
+        },
+        total: { type: "number" },
+    },
+    required: ["notas", "total"],
+};
+
 export async function pdfInterpreterAI(e, payload, onStatus) {
     e.preventDefault();
+
+    if (!Array.isArray(payload) || payload.length === 0) {
+        onStatus?.("Nenhum dado para processamento");
+        return null;
+    }
 
     if (!payload) {
         onStatus?.("Nenhum dado para processamento");
@@ -171,14 +187,24 @@ export async function pdfInterpreterAI(e, payload, onStatus) {
     onStatus?.("Processando dados com IA...");
 
     const text = `
-        Extraia os dados fiscais abaixo e retorne SOMENTE no formato JSON definido.
-        Conteúdo:
-        ${
-            typeof payload === "string"
-                ? payload
-                : JSON.stringify(payload, null, 2)
-        }
-        `;
+    Você receberá VÁRIAS notas fiscais em texto.
+
+    TAREFA:
+    - Extraia os dados de CADA nota fiscal
+    - Mantenha a MESMA ORDEM recebida
+    - Se um campo não existir, retorne "" ou 0
+    - Não invente valores
+    - A chave total representa o número de notas recebidas
+
+    FORMATO DE RESPOSTA (JSON):
+    {
+    "total": number,
+    "notas": array
+    }
+
+    NOTAS:
+    ${payload.map((item) => JSON.stringify(item)).join("\n\n---\n\n")}
+    `;
 
     const response = await ai.models.generateContent({
         model: "gemini-2.5-flash",
@@ -190,10 +216,19 @@ export async function pdfInterpreterAI(e, payload, onStatus) {
         ],
         config: {
             responseMimeType: "application/json",
-            responseSchema: nfSchema,
+            responseSchema: nfBatchSchema,
         },
     });
 
     const data = response.candidates[0].content.parts[0].text;
-    return data.json();
+    
+    const result = JSON.parse(data);
+
+    if (result.total !== result.notas.length) {
+        console.warn("Total divergente do número de notas");
+    }
+
+    console.log(result)
+
+    return result.notas;
 }
