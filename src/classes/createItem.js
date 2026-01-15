@@ -1,4 +1,3 @@
-
 import Produto from "./produto";
 
 class CreateItem {
@@ -9,7 +8,7 @@ class CreateItem {
         dataEmissao,
         nomeEmitente,
         cnpjEmitente,
-        produtos,
+        produtos
     ) {
         this.chave = chave;
         this.cnpjEmitente = cnpjEmitente;
@@ -23,7 +22,7 @@ class CreateItem {
     set chave(chave = null) {
         this._chave = chave;
     }
-    
+
     set cnpjEmitente(cnpjEmitente = null) {
         this._cnpjEmitente = cnpjEmitente;
     }
@@ -45,16 +44,16 @@ class CreateItem {
     }
 
     set produtos(produtos = null) {
-        if(produtos === null || !(produtos instanceof Array)){
+        if (produtos === null || !(produtos instanceof Array)) {
             throw new Error("produtos deve ser um array válido");
         }
-        for(let item in produtos){
-            try{
+        for (let item in produtos) {
+            try {
                 item = new Produto(item);
-            }catch(e){
+            } catch (e) {
                 throw new Error(e);
             }
-            if(!(item instanceof Produto)){
+            if (!(item instanceof Produto)) {
                 throw new Error("item não é do tipo produto");
             }
         }
@@ -72,16 +71,16 @@ class CreateItem {
             throw new Error("Aceita apenas instancias de CreateItem");
         }
 
-        let formatObjeto = "";
+        const result = {};
+
         for (const [key, value] of Object.entries(objeto)) {
-            if(key === "_fileName"){
-                continue;
-            }
-            formatObjeto += key.replace("_", "") + "=" + JSON.stringify(value) + "&";
+            if (key === "_fileName") continue;
+            result[key.replace("_", "")] = value;
         }
-        formatObjeto = formatObjeto.slice(0, -1);
-        return formatObjeto;
+
+        return result;
     }
 }
 
-export default CreateItem
+export default CreateItem;
+
