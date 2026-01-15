@@ -1,5 +1,6 @@
 import DeleteItem from "../classes/deleteItem";
 import CreateItem from "../classes/createItem";
+import Queue from "../classes/queue";
 
 const submitForm = async (e, type, payload) => {
     const URL = import.meta.env.VITE_URL;
@@ -13,14 +14,25 @@ const submitForm = async (e, type, payload) => {
         }
     }
 
-    const formatedData = formatData(payload, type);
+    const groupsQtd = Math.floor(payload.length / 5) + (payload.length % 5 === 0 ? 0 : 1);
+    let lastIndex = 0;
+    let result = [];
 
-    const url = URL + "?route=" + type + "&" + formatedData;
-    console.log(url);
-    const resposta = await fetch(url);
-    const dados = await resposta.json();
+    for (let i = 0; i < groupsQtd; i++) {
+        console.log(groupsQtd)
+        await Queue.enQueue(async () => {
+            const formatedData = formatData(payload.slice(lastIndex, lastIndex + 5), type);
+            
+            const url = URL + "?route=" + type + "&" + formatedData;
+            console.log(lastIndex, lastIndex + 5);
+            const resposta = await fetch(url);
+            const dados = await resposta.json();
+            result.push(dados);
+        });
+        lastIndex += 5;
+    }
 
-    return dados;
+    return result;
 };
 
 function formatData(payload, type) {
