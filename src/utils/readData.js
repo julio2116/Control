@@ -191,37 +191,21 @@ export async function pdfInterpreterAI(e, payload, onStatus) {
 
     TAREFA:
     - Extraia os dados de CADA nota fiscal
-    - Mantenha EXATAMENTE a MESMA ORDEM recebida
-    - NÃO faça inferências
-    - NÃO estime valores
-    - NÃO calcule valores
-    - NÃO complete campos por contexto
-    - NÃO use conhecimento externo
-
-    REGRAS OBRIGATÓRIAS:
-    - Se QUALQUER campo não estiver EXPLICITAMENTE presente no texto da nota, retorne:
-    - "" para strings
-    - 0 para números
-    - Se NÃO houver informações suficientes para identificar UM produto,
-    retorne o array "produtos" com UM único objeto totalmente vazio:
-    {
-        "descricao": "",
-        "qtd": 1,
-        "valor": 0
-    }
+    - Mantenha a MESMA ORDEM recebida
+    - Se um campo não existir, retorne "" ou 0
+    - Não invente valores
+    - A chave total representa o número de notas recebidas
+    - Para nota de comércio, busque o valor unitario para a chave valor
 
     IMPORTANTE:
     - É PROIBIDO criar produtos, valores, quantidades ou descrições que não apareçam literalmente no texto
-    - Se houver dúvida, ambiguidade ou múltiplas interpretações, retorne campos vazios
-
-    TOTAL:
-    - A chave "total" deve conter APENAS o número de notas recebidas
-    - NÃO some valores
-    - NÃO calcule totais financeiros
 
     VALOR DO PRODUTO:
     - Para notas de comércio, utilize APENAS o valor unitário informado
     - Se não houver valor unitário explícito, retorne 0
+
+    QUANTIDADE DO PRODUTO:
+    - Caso não identifique uma quantidade para o produto mas, tenha identificado sua descrição pode definir o campo como 1
 
     FORMATO DE RESPOSTA (JSON ESTRITO):
     {
