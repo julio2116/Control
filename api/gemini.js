@@ -50,9 +50,8 @@ export default async function handler(req, res) {
         return res.status(405).json({ error: "Método não permitido" });
     }
     
-    const {text} = req.body
-    
     try {
+        const {text} = req.body
         const API_KEY = process.env.GEMINI_API_KEY;
         const ai = new GoogleGenAI({ apiKey: API_KEY });
         

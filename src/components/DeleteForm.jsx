@@ -14,15 +14,13 @@ const DeleteForm = () => {
     const [filtered, setFiltered] = useState([]);
     const [produto, setProduto] = useState(empty);
 
-    const URL = import.meta.env.VITE_URL;
-
     async function loadNames() {
         if (isLoading) return;
-        const url = URL;
         try {
-            const res = await fetch(url);
+            const res = await fetch("api/apiGet");
+            console.log(res)
             const data = await res.json();
-            setAllNames(data.items);
+            setAllNames(data.data.items);
         } catch (err) {
             console.error("Erro ao carregar nomes:", err);
         }
@@ -43,7 +41,7 @@ const DeleteForm = () => {
             setFiltered([]);
             return;
         }
-
+        console.log(typeof allNames, allNames)
         const filtrados = allNames.filter((item) =>
             item.produto.toLowerCase().includes(value.toLowerCase())
         );
@@ -63,8 +61,8 @@ const DeleteForm = () => {
     async function selectName(item) {
         setFiltered([]);
         setIsLoading(true);
-        const fetchData = await fetch(URL + `?route=readOne&id=${item}`);
-        const data = await fetchData.json();
+        const fetchID = await fetch(`api/apiGet?id=${item}`);
+        const data = await fetchID.json();
         setProduto((prev) => ({ ...prev, ...data.item }));
 
         setIsLoading(false);

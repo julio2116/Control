@@ -1,32 +1,36 @@
 import DeleteItem from "../classes/deleteItem";
 import CreateItem from "../classes/createItem";
 import Queue from "../classes/queue";
+import fetchCall from "./fetchCall"
 
 const submitForm = async (e, type, payload) => {
-    const URL = import.meta.env.VITE_URL;
     e.preventDefault();
-
+    console.log(payload);
     if (!payload) {
         const data = new FormData(e.target);
-        payload = Object.fromEntries(data);
-        for (const [key, value] of Object.entries(payload)) {
+        const tempData = Object.fromEntries(data);
+        for (const [key, value] of Object.entries(tempData)) {
             if (!value) throw new Error("PREENCHA TODOS OS ITENS");
         }
+        payload = [];
+        payload.push(tempData);
     }
 
-    const groupsQtd = Math.floor(payload.length / 5) + (payload.length % 5 === 0 ? 0 : 1);
+    const groupsQtd = Math.ceil(payload.length / 5);
     let lastIndex = 0;
     let result = [];
+    console.log(payload);
 
     for (let i = 0; i < groupsQtd; i++) {
-        console.log(groupsQtd)
+        console.log(groupsQtd);
         await Queue.enQueue(async () => {
-            const formatedData = formatData(payload.slice(lastIndex, lastIndex + 5), type);
-            
-            const url = URL + "?route=" + type + "&" + formatedData;
-            console.log(lastIndex, lastIndex + 5);
-            const resposta = await fetch(url);
-            const dados = await resposta.json();
+            const formatedData = formatData(
+                payload.slice(lastIndex, lastIndex + 5),
+                type
+            );
+
+            const dados = await fetchCall({ type, formatedData }, "apiCall");
+
             result.push(dados);
         });
         lastIndex += 5;
@@ -36,56 +40,34 @@ const submitForm = async (e, type, payload) => {
 };
 
 function formatData(payload, type) {
-    const {
-        fileName,
-        chave,
-        numeroNota,
-        dataEmissao,
-        nomeEmitente,
-        cnpjEmitente,
-        produtos,
-    } = payload;
-
     switch (type) {
         case "delete":
-            const newDeleteItem = new DeleteItem(
-                fileName,
-                chave,
-                numeroNota,
-                dataEmissao,
-                nomeEmitente,
-                cnpjEmitente,
-                produtos
+            const newDeleteItem = payload.map((item) => {
+                return new DeleteItem(
+                    item.id,
+                    item.nome,
+                    item.qtd,
+                );
+            });
+            const listaDelete = newDeleteItem.map((item) =>
+                DeleteItem.KeysAndValues(item)
             );
-            return DeleteItem.KeysAndValues(newDeleteItem);
+            return "lista=" + encodeURIComponent(JSON.stringify(listaDelete));
 
         case "create":
             let newCreateItem = [];
-            if (Array.isArray(payload)) {
-                newCreateItem = payload.map((item) => {
-                    return new CreateItem(
-                        item.fileName,
-                        item.chave,
-                        item.numeroNota,
-                        item.dataEmissao,
-                        item.nomeEmitente,
-                        item.cnpjEmitente,
-                        item.produtos
-                    );
-                });
-            } else {
-                newCreateItem.push(
-                    new CreateItem(
-                        payload.fileName,
-                        payload.chave,
-                        payload.numeroNota,
-                        payload.dataEmissao,
-                        payload.nomeEmitente,
-                        payload.cnpjEmitente,
-                        payload.produtos
-                    )
+
+            newCreateItem = payload.map((item) => {
+                return new CreateItem(
+                    item.fileName,
+                    item.chave,
+                    item.numeroNota,
+                    item.dataEmissao,
+                    item.nomeEmitente,
+                    item.cnpjEmitente,
+                    item.produtos
                 );
-            }
+            });
 
             const lista = newCreateItem.map((item) =>
                 CreateItem.KeysAndValues(item)
