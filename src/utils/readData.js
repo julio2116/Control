@@ -1,10 +1,6 @@
 import * as pdfjsLib from "pdfjs-dist";
 import Tesseract from "tesseract.js";
 import { parseXMLContent } from "./parseXMLContent";
-import { GoogleGenAI } from "@google/genai";
-
-const API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
-const ai = new GoogleGenAI({ apiKey: API_KEY });
 
 /* =========================
    PDF WORKER
@@ -122,54 +118,18 @@ export async function processPDFs(files, onStatus) {
     return finalResult;
 }
 
-/* =========================
-   PDF interpreter
-========================= */
-
-const nfSchema = {
-    type: "object",
-    properties: {
-        chave: { type: "string" },
-        cnpjEmitente: { type: "string" },
-        dataEmissao: {
-            type: "string",
-            description: "Formato DD/MM/YYYY",
-        },
-        nomeEmitente: { type: "string" },
-        numeroNota: { type: "string" },
-        produtos: {
-            type: "array",
-            items: {
-                type: "object",
-                properties: {
-                    descricao: { type: "string" },
-                    qtd: { type: "number" },
-                    valor: { type: "number" },
-                },
-            },
-        },
+async function gerarTexto(data) {
+  const response = await fetch("/api/gemini", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
     },
-    required: [
-        "chave",
-        "cnpjEmitente",
-        "dataEmissao",
-        "nomeEmitente",
-        "numeroNota",
-        "produtos",
-    ],
-};
+    body: JSON.stringify(data),
+  });
 
-const nfBatchSchema = {
-    type: "object",
-    properties: {
-        notas: {
-            type: "array",
-            items: nfSchema,
-        },
-        total: { type: "number" },
-    },
-    required: ["notas", "total"],
-};
+  const result = await response.json();
+  return result;
+}
 
 export async function pdfInterpreterAI(e, payload, onStatus) {
     e.preventDefault();
@@ -217,27 +177,7 @@ export async function pdfInterpreterAI(e, payload, onStatus) {
     ${payload.map((item) => JSON.stringify(item)).join("\n\n---\n\n")}
     `;
 
-    const response = await ai.models.generateContent({
-        model: "gemini-2.5-flash",
-        contents: [
-            {
-                role: "user",
-                parts: [{ text }],
-            },
-        ],
-        config: {
-            responseMimeType: "application/json",
-            responseSchema: nfBatchSchema,
-        },
-    });
-
-    const data = response.candidates[0].content.parts[0].text;
-    
-    const result = JSON.parse(data);
-
-    if (result.total !== result.notas.length) {
-        console.warn("Total divergente do número de notas");
-    }
-
+    const result = await gerarTexto({text})
+    console.log(result)
     return result.notas;
 }
