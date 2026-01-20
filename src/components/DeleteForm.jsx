@@ -18,9 +18,7 @@ const DeleteForm = () => {
         if (isLoading) return;
         try {
             const res = await fetch("api/apiGet");
-            console.log(res)
             const data = await res.json();
-            console.log(data.result)
             setAllNames(data.result);
         } catch (err) {
             console.error("Erro ao carregar nomes:", err);
@@ -42,7 +40,6 @@ const DeleteForm = () => {
             setFiltered([]);
             return;
         }
-        console.log(typeof allNames, allNames)
         const filtrados = allNames.filter((item) =>
             item.produto.toLowerCase().includes(value.toLowerCase())
         );
@@ -64,7 +61,6 @@ const DeleteForm = () => {
         setIsLoading(true);
         const fetchID = await fetch(`api/apiGet?id=${item}`);
         const data = await fetchID.json();
-        console.log(data)
         setProduto((prev) => ({ ...prev, ...data.result }));
 
         setIsLoading(false);

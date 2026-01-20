@@ -6,7 +6,6 @@ export default async function apiCreate(req, res) {
 
     try {
         const { formatedData } = req.body;
-        console.log(formatedData)
         const url = URL + "?route=create&" + formatedData;
         const resposta = await fetch(url);
         const dados = await resposta.json();

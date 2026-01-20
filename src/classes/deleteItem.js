@@ -39,12 +39,14 @@ class DeleteItem {
             throw new Error("Aceita apenas instancias de DeleteItem");
         }
 
-        let formatObjeto = "";
+        const result = {};
+
         for (const [key, value] of Object.entries(objeto)) {
-            formatObjeto += key.replace("_", "") + "=" + value + "&";
+            if (key === "_fileName") continue;
+            result[key.replace("_", "")] = value;
         }
-        formatObjeto = formatObjeto.slice(0, -1);
-        return formatObjeto;
+
+        return result;
     }
 
 }

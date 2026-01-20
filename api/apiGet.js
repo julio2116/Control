@@ -1,5 +1,4 @@
 export default async function apiGet(req, res) {
-    console.log("entrou")
     const url = process.env.URL;
     const { id } = req.query;
     let response;
@@ -13,7 +12,6 @@ export default async function apiGet(req, res) {
         }
 
         const myResponse = await response.json();
-        console.log("teste", myResponse)
         const result = myResponse.item || myResponse.items;
         res.status(200).json({ result });
     } catch (err) {

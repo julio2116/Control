@@ -34,7 +34,6 @@ const CreateImportForm = () => {
 
   async function handleSend(e) {
     setIsLoading(true);
-    console.log(pdfJSON)
     if(pdfJSON) {
       const data = await pdfInterpreterAI(e, pdfJSON, setStatus);
       await submitForm(e, "POST", data);

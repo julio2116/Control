@@ -14,7 +14,6 @@ export default async function fetchCall({ method, formatedData }) {
             route = "apiUpdate";
             break;
     }
-    console.log(`/api/${route}`);
     const response = await fetch(`/api/${route}`, {
         method,
         headers: {
@@ -22,6 +21,6 @@ export default async function fetchCall({ method, formatedData }) {
         },
         body: JSON.stringify({formatedData})
     });
-
+    
     return await response.json();
 }
