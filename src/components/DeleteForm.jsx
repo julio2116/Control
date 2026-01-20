@@ -20,14 +20,15 @@ const DeleteForm = () => {
             const res = await fetch("api/apiGet");
             console.log(res)
             const data = await res.json();
-            setAllNames(data.data.items);
+            console.log(data.result)
+            setAllNames(data.result);
         } catch (err) {
             console.error("Erro ao carregar nomes:", err);
         }
     }
     useEffect(() => {
         loadNames();
-    }, [isLoading]);
+    }, []);
 
     function handleNomeChange(e) {
         let value = e.target.value;
@@ -63,7 +64,8 @@ const DeleteForm = () => {
         setIsLoading(true);
         const fetchID = await fetch(`api/apiGet?id=${item}`);
         const data = await fetchID.json();
-        setProduto((prev) => ({ ...prev, ...data.item }));
+        console.log(data)
+        setProduto((prev) => ({ ...prev, ...data.result }));
 
         setIsLoading(false);
     }
@@ -89,7 +91,7 @@ const DeleteForm = () => {
 
         setIsLoading(true);
         try {
-            await submitForm(e, "delete");
+            await submitForm(e, "DELETE");
             setProduto(empty);
             setIsLoading(false);
         } catch (e) {

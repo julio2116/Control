@@ -3,7 +3,7 @@ import CreateItem from "../classes/createItem";
 import Queue from "../classes/queue";
 import fetchCall from "./fetchCall"
 
-const submitForm = async (e, type, payload) => {
+const submitForm = async (e, method, payload) => {
     e.preventDefault();
     console.log(payload);
     if (!payload) {
@@ -26,10 +26,10 @@ const submitForm = async (e, type, payload) => {
         await Queue.enQueue(async () => {
             const formatedData = formatData(
                 payload.slice(lastIndex, lastIndex + 5),
-                type
+                method
             );
 
-            const dados = await fetchCall({ type, formatedData }, "apiCall");
+            const dados = await fetchCall({method, formatedData});
 
             result.push(dados);
         });
@@ -39,9 +39,9 @@ const submitForm = async (e, type, payload) => {
     return result;
 };
 
-function formatData(payload, type) {
-    switch (type) {
-        case "delete":
+function formatData(payload, method) {
+    switch (method) {
+        case "DELETE":
             const newDeleteItem = payload.map((item) => {
                 return new DeleteItem(
                     item.id,
@@ -54,7 +54,7 @@ function formatData(payload, type) {
             );
             return "lista=" + encodeURIComponent(JSON.stringify(listaDelete));
 
-        case "create":
+        case "POST":
             let newCreateItem = [];
 
             newCreateItem = payload.map((item) => {
@@ -76,7 +76,7 @@ function formatData(payload, type) {
 
         default:
             throw new Error(
-                "Tipo desconhecido, use: create, update, delete, readOne, saldo, readAll"
+                "Tipo desconhecido, use: POST, UPDATE, DELETE, GET"
             );
     }
 }
