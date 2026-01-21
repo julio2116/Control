@@ -14,6 +14,8 @@ export default async function fetchCall({ method, formatedData }) {
             route = "apiUpdate";
             break;
     }
+    // method = method == "DELETE" ? "POST" : method;
+
     const response = await fetch(`/api/${route}`, {
         method,
         headers: {

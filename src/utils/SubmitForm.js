@@ -6,13 +6,8 @@ import fetchCall from "./fetchCall"
 const submitForm = async (e, method, payload) => {
     e.preventDefault();
 
-    if(!Array.isArray(payload)){
-        const tempData = payload;
-        payload = []
-        payload.push(tempData)
-    }
-
     if (!payload) {
+        console.log(e.target)
         const data = new FormData(e.target);
         const tempData = Object.fromEntries(data);
         for (const [key, value] of Object.entries(tempData)) {
@@ -20,6 +15,12 @@ const submitForm = async (e, method, payload) => {
         }
         payload = [];
         payload.push(tempData);
+    }
+
+    if (!Array.isArray(payload)) {
+        const tempData = payload;
+        payload = []
+        payload.push(tempData)
     }
 
     const groupsQtd = Math.ceil(payload.length / 5);
@@ -33,7 +34,7 @@ const submitForm = async (e, method, payload) => {
                 payload.slice(lastIndex, lastIndex + 5),
                 method
             );
-            const dados = await fetchCall({method, formatedData});
+            const dados = await fetchCall({ method, formatedData });
 
             result.push(dados);
         });
@@ -44,6 +45,7 @@ const submitForm = async (e, method, payload) => {
 };
 
 function formatData(payload, method) {
+    console.log(payload)
     switch (method) {
         case "DELETE":
             const newDeleteItem = payload.map((item) => {
@@ -78,7 +80,7 @@ function formatData(payload, method) {
             const lista = newCreateItem.map((item) =>
                 CreateItem.KeysAndValues(item)
             );
-        
+
             return "lista=" + encodeURIComponent(JSON.stringify(lista));
 
         default:
