@@ -5,7 +5,7 @@ import { homeRotas } from "../routes/routes";
 const Aside = ({ isOpen, onClose }) => {
     const [active, setActive] = useState(0);
     const location = useLocation();
-
+    
     const rotas = homeRotas.map(rota => rota.path.replace("/", ""))
     const activeClass = "bg-[#F2F5FF] relative rounded-l-4xl px-4 py-2 text-[#1447E6]"
     const activeClassHover = "hover:bg-[#F2F5FF] hover:relative hover:rounded-l-4xl hover:px-4 hover:text-[#1447E6]"
