@@ -7,7 +7,6 @@ const submitForm = async (e, method, payload) => {
     e.preventDefault();
 
     if (!payload) {
-        console.log(e.target)
         const data = new FormData(e.target);
         const tempData = Object.fromEntries(data);
         for (const [key, value] of Object.entries(tempData)) {
@@ -26,7 +25,6 @@ const submitForm = async (e, method, payload) => {
     const groupsQtd = Math.ceil(payload.length / 5);
     let lastIndex = 0;
     let result = [];
-    console.log(e, method, payload)
 
     for (let i = 0; i < groupsQtd; i++) {
         await Queue.enQueue(async () => {
@@ -45,7 +43,6 @@ const submitForm = async (e, method, payload) => {
 };
 
 function formatData(payload, method) {
-    console.log(payload)
     switch (method) {
         case "DELETE":
             const newDeleteItem = payload.map((item) => {
@@ -62,7 +59,6 @@ function formatData(payload, method) {
             return "lista=" + encodeURIComponent(JSON.stringify(listaDelete));
 
         case "POST":
-            console.log("teste")
             let newCreateItem = [];
 
             newCreateItem = payload.map((item) => {

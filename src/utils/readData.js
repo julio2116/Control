@@ -178,6 +178,6 @@ export async function pdfInterpreterAI(e, payload, onStatus) {
     `;
 
     const result = await gerarTexto({text})
-console.log(result)
+
     return result.notas;
 }
