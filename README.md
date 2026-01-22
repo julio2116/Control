@@ -49,14 +49,14 @@ On the terminal type:
 3. code .
 
 ### Install the vercel CLI and link the project:
-### Considering you have already deployed the project on Vercel ===
-npm install -g vercel
+### Considering you have already deployed the project on Vercel
+npm install -g vercel\n
 vercel login
 
 > Follow the instructions that will appear on the terminal
 
 ### Install the dependencies and configure the enviroment variables:
-npm i
+npm i\n
 .env (it must contain a URl and GEMINI_API_KEY, variables. The URL leads to google sheets wich must handle the incoming data)
 
 With everything set up and well configured type:
@@ -74,7 +74,7 @@ For default both front and back end will run in diferrent ports, wich will not t
 This configuration file, gives us the follow logic: the rewrites key, rewrites the routes that the vercel will handler, like: everything that contains the "/api/(*)" must be redirected to the "/api/$1" routes (back end), only if that rule do not aply (any other route that do not contain "/api"), it falls on the fall back rule: "redirect everything to the index.html", at this point the react router will handler every route.
 When we try to leave the vercel alone decide what to do with the routes it will try to find an archive with the route name.
 
-http://localhost            --> it will look for /dist/index.html (dist is the default directory after the build)
+http://localhost            --> it will look for /dist/index.html (dist is the default directory after the build)\n
 http://localhost/incluir    --> it will look for /dist/incluir.html (as it do not exists the browser will give us as 404 not found error)
 
 Every single time we have the react router in the project it handle the routes created for us by its intern rules, evrything from the index.html, so we have to return this control for the react router, by turninning every single route that does not have the "/api" back to main .html archive.
@@ -82,8 +82,8 @@ Every single time we have the react router in the project it handle the routes c
 In this project we have to kinds of routes at the same time, back and front.
 By default vercel will serve only statics files and the js served along with index.html will visualy build the page, as it is a SPA, we only have one html archive, normally we would have have an diferent archive for each page, and when trying to accesss any url, the browser would look for the archive menchioned on the url, in this case if we want to have diferente Url's, we need to use the react router, that lib will render all of the information on the screen creating the ilusion we have diferente archives, it will intercept all the search for the diferent archive and redirect it to the index.html, while it will keep record of the state of that page and allow as to navigate between diferent "pages" (routes).
 
-Flow:
-1 --> if the end point has the "/api" it will be redirect to the archives on the "/api" path.
+Flow:\n
+1 --> if the end point has the "/api" it will be redirect to the archives on the "/api" path.\n
 2 --> then vercel will redirect any other call to the index.html
 
 > If the rule on the rewrites was not that restrictive it would follow to the third one
