@@ -1,4 +1,4 @@
-const AlterForm = () => {
+const UpdateForm = () => {
     return(
         <>
             
@@ -6,4 +6,4 @@ const AlterForm = () => {
     )
 }
 
-export default AlterForm
+export default UpdateForm

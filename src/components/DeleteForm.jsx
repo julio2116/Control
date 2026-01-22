@@ -72,7 +72,7 @@ const DeleteForm = () => {
         const tagItems = {};
         items.forEach((item) => {
             Object.assign(tagItems, {
-                [item.id]: item.value || item.innerText,
+                [item.id]: Number(item.value) || Number(item.innerText),
             });
         });
 
