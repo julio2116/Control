@@ -132,8 +132,6 @@ const CreateImportForm = () => {
           </button>
         </form>
       </div>
-
-      {isLoading && <Loading />}
     </>
   );
 };

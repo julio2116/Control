@@ -207,7 +207,6 @@ const DeleteForm = () => {
                     </button>
                 </form>
             </div>
-            {isLoading && <Loading />}
         </>
     );
 };
