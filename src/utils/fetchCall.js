@@ -1,21 +1,23 @@
-export default async function fetchCall({ method, formatedData }) {
-    let route = "";
-    switch (method) {
-        case "POST":
-            route = "apiCreate";
+export default async function fetchCall({ route, formatedData }) {
+    let method = "";
+    switch (route) {
+        case "apiCreate":
+            method = "POST";
             break;
-        case "DELETE":
-            route = "apiDelete";
+        case "apiDelete":
+            method = "DELETE";
             break;
-        case "GET":
-            route = "apiGet";
+        case "apiGet":
+            method = "GET";
             break;
-        case "PATCH":
-            route = "apiUpdate";
+        case "apiUpdate":
+            method = "PATCH";
+            break;
+        case "apiLogin":
+            method = "POST";
             break;
     }
-    // method = method == "DELETE" ? "POST" : method;
-
+    console.log(`/api/${route}`)
     const response = await fetch(`/api/${route}`, {
         method,
         headers: {

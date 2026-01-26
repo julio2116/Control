@@ -3,7 +3,7 @@ import CreateItem from "../classes/createItem";
 import Queue from "../classes/queue";
 import fetchCall from "./fetchCall"
 
-const submitForm = async (e, method, payload) => {
+const submitForm = async (e, route, payload) => {
     e.preventDefault();
 
     if (!payload) {
@@ -30,9 +30,9 @@ const submitForm = async (e, method, payload) => {
         await Queue.enQueue(async () => {
             const formatedData = formatData(
                 payload.slice(lastIndex, lastIndex + 5),
-                method
+                route
             );
-            const dados = await fetchCall({ method, formatedData });
+            const dados = await fetchCall({ route, formatedData });
 
             result.push(dados);
         });
@@ -42,9 +42,9 @@ const submitForm = async (e, method, payload) => {
     return result;
 };
 
-function formatData(payload, method) {
-    switch (method) {
-        case "DELETE":
+function formatData(payload, route) {
+    switch (route) {
+        case "apiDelete":
             const newDeleteItem = payload.map((item) => {
                 return new DeleteItem(
                     item.nome,
@@ -58,7 +58,7 @@ function formatData(payload, method) {
 
             return "lista=" + encodeURIComponent(JSON.stringify(listaDelete));
 
-        case "POST":
+        case "apiCreate":
             let newCreateItem = [];
 
             newCreateItem = payload.map((item) => {

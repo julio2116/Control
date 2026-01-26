@@ -87,7 +87,7 @@ const DeleteForm = () => {
 
         setIsLoading(true);
         try {
-            await submitForm(e, "DELETE");
+            await submitForm(e, "apiDelete");
             setProduto(empty);
             setIsLoading(false);
         } catch (e) {

@@ -13,6 +13,7 @@
   "dependencies": {
     "@google/genai": "^1.35.0",
     "@tailwindcss/vite": "^4.1.17",
+    "jsonwebtoken": "^9.0.3",
     "pdfjs-dist": "^3.11.174",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",

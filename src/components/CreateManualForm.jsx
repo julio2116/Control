@@ -51,7 +51,7 @@ const CreateManualForm = () => {
       })),
     };
 
-    await submitForm(e, "POST", payload);
+    await submitForm(e, "apiCreate", payload);
   }
 
   return (
