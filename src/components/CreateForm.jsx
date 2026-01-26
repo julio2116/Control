@@ -3,8 +3,8 @@ import { Outlet, Link } from "react-router";
 const CreateForm = () => {
     return (
         <>
-            <div className="z-[10] flex flex-col items-center justify-center mt-[90px] md:mt-0 min-h-screen w-full overflow-y-auto py-10">
-                <div className="flex gap-4 justify-center bg-transparent mb-5">
+            <div className="z-[10] flex flex-col items-center justify-center min-h-screen w-full overflow-y-auto">
+                <div className="flex gap-4 justify-center bg-transparent my-10">
                     <Link
                         to="importar"
                         className="px-5 py-2 rounded-xl bg-blue-600 text-white font-semibold

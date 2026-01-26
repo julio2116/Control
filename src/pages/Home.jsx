@@ -21,7 +21,7 @@ const Home = () => {
                         backgroundImage: "url(/iel-ceara.svg)",
                     }}
                 />
-                <div className="relative z-10 min-h-screen p-4">
+                <div className="relative z-10 min-h-screen">
                     <Outlet />
                 </div>
             </main>

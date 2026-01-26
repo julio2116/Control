@@ -86,7 +86,7 @@ const CreateManualForm = () => {
                 <button
                   type="button"
                   onClick={() => removeProduto(produto.id)}
-                  className="absolute top-2 right-2 text-sm text-red-500 hover:underline"
+                  className="absolute z-10 top-2 right-2 text-sm text-red-500 hover:underline"
                 >
                   Remover
                 </button>

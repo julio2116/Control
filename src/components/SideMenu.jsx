@@ -6,7 +6,7 @@ const SideMenu = () => {
 
     return (
         <>
-            <div className="fixed md:static z-[49] md:min-w-[15%] max-w-[60%]">
+            <div className="fixed md:static z-[49] md:min-w-[15%] max-w-[60%] top-5 left-5">
                 <div
                     className={`${
                         isOpen ? "hidden" : "block"
