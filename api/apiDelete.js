@@ -9,7 +9,7 @@ export default async function apiDelete(req, res) {
         const resposta = await fetch(url);
         const dados = await resposta.json();
 
-        res.status(205).json({ dados });
+        res.status(200).json({ dados });
     } catch (err) {
         res.status(500).json({ error: err.message });
     }

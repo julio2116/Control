@@ -9,20 +9,31 @@ export default async function apiLogin(req, res) {
     const URL = process.env.URL;
 
     try {
-        const { email, senha } = req.body.formatedData;
-        const url = URL + "?route=login&" + email;
+        const { email, senha } = req.body;
+        const url = `${URL}?route=login&email=${email}`;
         const resposta = await fetch(url);
         const dados = await resposta.json();
+        console.log(dados);
+        console.log(dados.senha);
 
-        const match = bcrypt.compare([senha], dados.senha);
+        if (dados.error){
+            res.status(200).json(dados.error);
+            return;
+        }
 
-        if (!match) res.status(500).json({ error: err.message });
+        const match = await bcrypt.compare(senha, dados.senha);
+        console.log(match)
 
-        const token = jwt.sign(dados.id, "teste", {
-            expiresIn: "30d",
+        if (!match) {
+            res.status(500).json({ error: "Senha inválida" })
+            return;
+        }
+
+        const token = jwt.sign({dados: dados.id}, "teste", {
+            expiresIn: "30d"
         });
 
-        res.status(201).json({ token });
+        res.status(200).json({ token });
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
