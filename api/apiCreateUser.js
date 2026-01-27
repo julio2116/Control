@@ -14,10 +14,10 @@ export default async function apiCreateUser(req, res) {
             if(err) res.status(500).json({ error: err.message });
             console.log(`${URL}?route=createUser&email=${email}&senha=${hash}`)
             console.log(hash)
-            // const url = URL + "?route=createUser&" + formatedData.email + hash;
-            // const resposta = await fetch(url);
-            // const dados = await resposta.json();
-            res.status(201).json({ funfou: "funfado" });
+            const url = `${URL}?route=createUser&email=${email}&senha=${hash}`;
+            const resposta = await fetch(url);
+            const dados = await resposta.json();
+            res.status(201).json({ dados });
         });
 
     } catch (err) {
