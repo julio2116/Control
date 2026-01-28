@@ -13,8 +13,6 @@ export default async function apiLogin(req, res) {
         const url = `${URL}?route=login&email=${email}`;
         const resposta = await fetch(url);
         const dados = await resposta.json();
-        console.log(dados);
-        console.log(dados.senha);
 
         if (dados.error){
             res.status(200).json(dados.error);
@@ -22,14 +20,13 @@ export default async function apiLogin(req, res) {
         }
 
         const match = await bcrypt.compare(senha, dados.senha);
-        console.log(match)
 
         if (!match) {
             res.status(500).json({ error: "Senha inválida" })
             return;
         }
 
-        const token = jwt.sign({dados: dados.id}, "teste", {
+        const token = jwt.sign({id: dados.id, nome: dados.nome}, "teste", {
             expiresIn: "30d"
         });
 
